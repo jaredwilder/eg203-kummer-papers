@@ -1,0 +1,412 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{warning}{Warning}
+
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathbb E}
+\newcommand{\TV}{\mathrm{TV}}
+
+\title{Kummer-Fourier Smoothing and the Random-Walk Bridge}
+\author{Jared Wilder}
+\date{2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper 4 isolated a random-walk smoothing bridge (KRWS) as a named input in the conditional Erd\H{o}s--Graham \#203 route.  Papers 8--11 now make that bridge finite and exact for the Bernoulli-Kummer obstruction law actually used by the CRT sieve model.  This note proves the resulting smoothing theorem: weighted prime Hecke non-concentration gives exponential \(L^2\) and total-variation flattening of the Bernoulli obstruction distribution, with collision probability \(\ell^{-r}+O_A((\log Q)^{-A})\) in the high-\(\ell\) range once PHNC is supplied.  It also proves that the analogous deterministic prime-vector walk is not controlled by linear hyperplane non-concentration: affine hyperplane concentration gives a zero spectral gap.  Thus KRWS splits into a solved Bernoulli branch and a deterministic branch requiring affine non-concentration.  The result does not prove PHNC, Kummer-BV, BVK, or Erd\H{o}s--Graham \#203.
+\end{abstract}
+
+\section{Finite Fourier conventions}
+
+Let
+\[
+G=\F_\ell^r,\qquad |G|=\ell^r,
+\]
+and let \(u\) denote the uniform probability measure on \(G\).  For a probability measure \(\mu\) on \(G\), define
+\[
+\widehat\mu(A)=\sum_{x\in G}\mu(x)e_\ell(A\cdot x),
+\qquad A\in G,
+\]
+where \(e_\ell(t)=\exp(2\pi i t/\ell)\).  Then
+\[
+\|\mu-u\|_2^2
+=
+\ell^{-r}\sum_{A\ne0}|\widehat\mu(A)|^2,
+\]
+and
+\[
+\|\mu-u\|_{\TV}
+\le
+\frac12\ell^{r/2}\|\mu-u\|_2.
+\]
+The collision probability of \(\mu\) is
+\[
+\operatorname{Col}(\mu)=\sum_{x\in G}\mu(x)^2
+=
+\ell^{-r}+\|\mu-u\|_2^2.
+\]
+
+\section{The deterministic affine trap}
+
+The first point is negative and structural.  Linear hyperplane non-concentration does not imply smoothing for the deterministic step measure
+\[
+\mu_{\mathcal Q}=\frac1{|\mathcal Q|}\sum_{q\in\mathcal Q}\delta_{x_q}.
+\]
+
+\begin{proposition}[Affine hyperplane trap]\label{P:affine-trap}
+Let \(r\ge2\), let \(A_0\in\F_\ell^r\setminus\{0\}\), and let \(\mu\) be the uniform measure on the affine hyperplane
+\[
+H_{A_0,1}=\{x\in\F_\ell^r:A_0\cdot x=1\}.
+\]
+Then \(\mu\) assigns mass at most \(1/\ell\) to every linear hyperplane \(\{x:A\cdot x=0\}\), but
+\[
+|\widehat\mu(A_0)|=1.
+\]
+Consequently \(\mu^{*n}\) does not converge to \(u\) for any sequence \(n\to\infty\).
+\end{proposition}
+
+\begin{proof}
+If \(A\) is a nonzero scalar multiple of \(A_0\), then \(\{A\cdot x=0\}\cap H_{A_0,1}=\varnothing\).  If \(A\) is not a scalar multiple of \(A_0\), then the two independent affine-linear equations cut \(H_{A_0,1}\) in codimension one inside \(H_{A_0,1}\), hence in relative mass \(1/\ell\).  This proves the claimed linear hyperplane non-concentration.
+
+For \(x\in H_{A_0,1}\), the character \(e_\ell(A_0\cdot x)\) is the constant \(e_\ell(1)\).  Thus \(\widehat\mu(A_0)=e_\ell(1)\), so \(|\widehat\mu(A_0)|=1\).  Since \(\widehat{\mu^{*n}}(A_0)=\widehat\mu(A_0)^n\), the same coefficient has modulus one for every \(n\), whereas the uniform measure has zero nontrivial Fourier coefficients.
+\end{proof}
+
+\section{Deterministic smoothing under affine non-concentration}
+
+The correct deterministic finite theorem uses affine hyperplanes, not only linear kernels.
+
+\begin{theorem}[Affine non-concentration smoothing]\label{T:affine-smoothing}
+Let \(\mu\) be a probability measure on \(G=\F_\ell^r\).  Assume that for some \(0<\delta\le1/2\),
+\[
+\max_{A\ne0,\ t\in\F_\ell}\mu(\{x:A\cdot x=t\})\le1-\delta.
+\]
+Then for every \(A\ne0\),
+\[
+|\widehat\mu(A)|^2
+\le
+1-2\delta(1-\delta)
+\left(1-\cos\frac{2\pi}{\ell}\right).
+\]
+Consequently, for every \(n\ge1\),
+\[
+\|\mu^{*n}-u\|_2^2
+\le
+(1-\ell^{-r})
+\exp\left(
+-2n\delta(1-\delta)
+\left(1-\cos\frac{2\pi}{\ell}\right)
+\right),
+\]
+and
+\[
+\|\mu^{*n}-u\|_{\TV}
+\le
+\frac12(\ell^r-1)^{1/2}
+\exp\left(
+-n\delta(1-\delta)
+\left(1-\cos\frac{2\pi}{\ell}\right)
+\right).
+\]
+\end{theorem}
+
+\begin{proof}
+Fix \(A\ne0\), and let \(Y=A\cdot X\in\F_\ell\), where \(X\) has law \(\mu\).  Let \(\rho(t)=\mathbb P(Y=t)\).  The affine non-concentration assumption gives \(\max_t\rho(t)\le1-\delta\).  Since \(0<\delta\le1/2\),
+\[
+\sum_t\rho(t)^2\le(1-\delta)^2+\delta^2.
+\]
+Let \(Y'\) be an independent copy of \(Y\).  Then
+\[
+\mathbb P(Y\ne Y')
+=1-\sum_t\rho(t)^2
+\ge2\delta(1-\delta).
+\]
+Also
+\[
+|\widehat\mu(A)|^2
+=
+\E e_\ell(Y-Y').
+\]
+The imaginary part vanishes by symmetry, and when \(Y-Y'\ne0\) the real part is at most \(\cos(2\pi/\ell)\).  Hence
+\[
+|\widehat\mu(A)|^2
+\le
+1-\mathbb P(Y\ne Y')
+\left(1-\cos\frac{2\pi}{\ell}\right),
+\]
+which proves the spectral gap.  Plancherel applied to \(\mu^{*n}\), together with
+\[
+(1-x)^n\le e^{-nx},
+\]
+gives the \(L^2\) bound.  The total-variation estimate follows from Cauchy--Schwarz:
+\[
+\|\mu^{*n}-u\|_{\TV}
+\le\frac12\ell^{r/2}\|\mu^{*n}-u\|_2.
+\]
+\end{proof}
+
+\begin{corollary}[Deterministic KRWS from affine PHNC]\label{C:det-krws}
+For \(r=2\), if \(\ell\le(\log Q)^B\), \(\delta=\ell^{-C}\), and
+\[
+n\delta(1-\delta)\left(1-\cos\frac{2\pi}{\ell}\right)
+\ge
+A\log\log Q+\log\ell+O(1),
+\]
+then
+\[
+\operatorname{Col}(\mu^{*n})
+=
+\ell^{-2}+O_A((\log Q)^{-A}).
+\]
+Using \(1-\cos(2\pi/\ell)\ge8/\ell^2\), it is enough to take
+\[
+n\gg_{A,B,C}\ell^{C+2}\log\log Q.
+\]
+\end{corollary}
+
+\section{The Bernoulli-Kummer obstruction walk}
+
+The deterministic affine trap is not the obstruction law used in the CRT model.  The actual finite object is the Bernoulli-Kummer obstruction walk
+\[
+\nu
+=
+*_{q\in\mathcal Q}
+\bigl((1-p_q)\delta_0+p_q\delta_{x_q}\bigr),
+\]
+the law of
+\[
+Y=\sum_{q\in\mathcal Q}B_qx_q,
+\]
+where the \(B_q\) are independent Bernoulli variables with parameters \(p_q\).  The independence is the CRT independence used in Paper 8.
+
+\begin{definition}[Weighted PHNC mass]\label{D:weighted-mass}
+Define
+\[
+W_\ell(\mathcal Q)
+=
+\min_{A\ne0}
+\sum_{q:A\cdot x_q\ne0}p_q(1-p_q).
+\]
+\end{definition}
+
+\begin{theorem}[Bernoulli-Kummer smoothing]\label{T:bernoulli-smoothing}
+For the Bernoulli-Kummer obstruction law \(\nu\),
+\[
+\|\nu-u\|_2^2
+\le
+(1-\ell^{-r})
+\exp\left(-\frac{16}{\ell^2}W_\ell(\mathcal Q)\right),
+\]
+and
+\[
+\|\nu-u\|_{\TV}
+\le
+\frac12(\ell^r-1)^{1/2}
+\exp\left(-\frac{8}{\ell^2}W_\ell(\mathcal Q)\right).
+\]
+Equivalently,
+\[
+\operatorname{Col}(\nu)
+=
+\ell^{-r}
++O\left(
+\exp\left(-\frac{16}{\ell^2}W_\ell(\mathcal Q)\right)
+\right),
+\]
+with the explicit error factor bounded by \(1-\ell^{-r}\).
+\end{theorem}
+
+\begin{proof}
+For \(A\ne0\), independence gives
+\[
+\widehat\nu(A)
+=
+\prod_{q\in\mathcal Q}
+\bigl((1-p_q)+p_qe_\ell(A\cdot x_q)\bigr).
+\]
+Therefore
+\[
+|\widehat\nu(A)|^2
+=
+\prod_{q\in\mathcal Q}
+\left[
+1-2p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right)
+\right],
+\]
+which is the Paper 8 squared-modulus identity after normalization by \(\varphi(P)^2\).  Using \(1-y\le e^{-y}\) and the universal gap
+\[
+1-\cos\frac{2\pi t}{\ell}\ge\frac8{\ell^2}
+\qquad(t\ne0),
+\]
+we obtain
+\[
+|\widehat\nu(A)|^2
+\le
+\exp\left(
+-\frac{16}{\ell^2}
+\sum_{q:A\cdot x_q\ne0}p_q(1-p_q)
+\right)
+\le
+\exp\left(-\frac{16}{\ell^2}W_\ell(\mathcal Q)\right).
+\]
+Plancherel over the \(\ell^r-1\) nontrivial characters gives
+\[
+\|\nu-u\|_2^2
+=
+\ell^{-r}\sum_{A\ne0}|\widehat\nu(A)|^2
+\le
+(1-\ell^{-r})
+\exp\left(-\frac{16}{\ell^2}W_\ell(\mathcal Q)\right).
+\]
+The total-variation and collision estimates follow from the identities in the opening section.
+\end{proof}
+
+\begin{corollary}[PHNC high-\(\ell\) consequence]\label{C:phnc-high-ell}
+Assume \(0<\alpha\le p_q\le1-\alpha\) and PHNC in the form
+\[
+\#\{q\in\mathcal Q:A\cdot x_q\ne0\}
+\ge
+\ell^{-C}|\mathcal Q|
+\qquad(A\ne0).
+\]
+Then
+\[
+W_\ell(\mathcal Q)
+\ge
+\alpha(1-\alpha)\ell^{-C}|\mathcal Q|,
+\]
+and therefore
+\[
+\|\nu-u\|_2^2
+\le
+(1-\ell^{-r})
+\exp\left(
+-16\alpha(1-\alpha)\ell^{-C-2}|\mathcal Q|
+\right).
+\]
+If \(\ell\le(\log Q)^B\) and \(|\mathcal Q|\asymp Q/(\ell\log Q)\), the exponent is
+\[
+\gg_{\alpha,B,C}
+\frac{Q}{\ell^{C+3}\log Q}
+\ge
+\frac{Q}{(\log Q)^{B(C+3)+1}}.
+\]
+Thus for fixed \(A_0>0\) and fixed \(r,B,C\),
+\[
+\operatorname{Col}(\nu)=\ell^{-r}+O_{A_0}((\log Q)^{-A_0})
+\]
+for all sufficiently large \(Q\).
+\end{corollary}
+
+\section{The Bernoulli-extremal obstruction}\label{S:bernoulli-extremal}
+
+The affine counterexample of \cref{P:affine-trap} kills deterministic finite-field smoothing.  We record here that the same failure persists under \emph{Bernoulli thinning} of the prime set, ruling out a class of extremal-only proof strategies for the Bernoulli branch.
+
+\begin{lemma}[Bernoulli shadow]\label{L:shadow}
+Let \(V=\F_\ell^r\), let \(\mathcal H\) be a finite family of affine or linear hyperplanes in \(V\), and let \(\{x_i\}\) be a finite multiset in \(V\) with independent Bernoulli weights \(\xi_i\sim\mathrm{Bernoulli}(p_i)\).  Define
+\[
+M=\sum_i p_i,\quad X=\sum_i\xi_i,\quad
+\mu(H)=\sum_{x_i\in H}p_i,\quad X(H)=\sum_{x_i\in H}\xi_i.
+\]
+For \(\delta\in(0,1)\), set \(L=\log(2(|\mathcal H|+1)/\delta)\) and \(U=2\sqrt{ML}+2L\).  Then with probability \(\ge 1-\delta\), simultaneously for every \(H\in\mathcal H\),
+\[
+|X-M|\le U,\qquad |X(H)-\mu(H)|\le U.
+\]
+If \(\mu(H_0)\ge(\theta+\eta)M\) for some \(H_0\) and \(U\le\eta M/6\), then \(X(H_0)/X\ge\theta+\eta/2\).
+\end{lemma}
+
+\begin{proof}
+Bernstein's inequality applied to \(X(H)-\mu(H)=\sum_i\mathbf 1[x_i\in H](\xi_i-p_i)\), then a union bound over \(\mathcal H\cup\{V\}\).
+\end{proof}
+
+\begin{corollary}[Bernoulli does not repair hyperplane support]\label{C:bernoulli-no-repair}
+If every \(x_i\) with \(p_i>0\) lies in a common hyperplane \(H_0\), then \(X(H_0)=X\) identically.  If \(M\to\infty\), then \(\mathbb P(X=0)\le\exp(-M)\to 0\), so the Bernoulli sample is, with probability \(1-o(1)\), nonempty and \(100\%\) hyperplane-concentrated.
+\end{corollary}
+
+We exhibit an explicit arithmetic family where this happens.
+
+\begin{lemma}[Hyperplane prime family]\label{L:hyperplane-family}
+Fix an odd prime \(\ell\) and \(A=(A_1,A_2)\in\F_\ell^2\setminus\{0\}\).  Set
+\[
+\alpha_A=2^{A_1}3^{A_2},\qquad K_{\ell,\star}=\mathbb Q(\zeta_\ell,2^{1/\ell},3^{1/\ell}).
+\]
+By rank-two Kummer independence (companion Paper~6), \(\operatorname{Gal}(K_{\ell,\star}/\mathbb Q(\zeta_\ell))\simeq\F_\ell^2\).  The prime set
+\[
+\mathcal P_{\ell,A}=\{q\nmid 6\ell:q\equiv 1\bmod\ell,\ x_\ell(q)\in H_A\},
+\qquad H_A=\{v\in\F_\ell^2:A\cdot v=0\},
+\]
+has natural density \(\delta_{\ell,A}=1/(\ell(\ell-1))\) by qualitative Chebotarev for \(K_{\ell,\star}/\mathbb Q\).
+\end{lemma}
+
+\begin{proof}
+The hyperplane atom criterion (Paper~6) gives \(x_\ell(q)\in H_A\Leftrightarrow\alpha_A\in(\F_q^*)^\ell\).  The absolute Galois group of \(K_{\ell,\star}/\mathbb Q\) has order \(\ell^2(\ell-1)\); the conditions \(q\equiv 1\bmod\ell\) (factor \(1/(\ell-1)\)) and \(x_\ell(q)\in H_A\) (factor \(|H_A|/|V|=1/\ell\)) compose to density \(1/(\ell(\ell-1))\).
+\end{proof}
+
+\begin{theorem}[Intrinsic Bernoulli-Kummer hyperplane obstruction]\label{T:bernoulli-obstruction}
+Fix an odd prime \(\ell\) and nonzero \(A\in\F_\ell^2\).  For \(X\ge 2\) let
+\[
+\mathcal Q_X=\mathcal P_{\ell,A}\cap[1,X],\qquad P_X=\prod_{q\in\mathcal Q_X}q,
+\]
+and choose \(m\) uniformly in \((\mathbb Z/P_X\mathbb Z)^*\).  Define
+\[
+W_X=\sum_{q\in\mathcal Q_X}B_q(m),\qquad W_X(H_A)=\sum_{\substack{q\in\mathcal Q_X\\ x_\ell(q)\in H_A}}B_q(m).
+\]
+Then \(W_X(H_A)=W_X\) identically, and \(\mathbb P_m(W_X>0)\to 1\) as \(X\to\infty\).
+\end{theorem}
+
+\begin{proof}
+By \cref{L:hyperplane-family}, every \(q\in\mathcal Q_X\) satisfies \(x_\ell(q)\in H_A\), so \(W_X(H_A)=W_X\) identically.  By Mertens applied to a density-\(1/(\ell(\ell-1))\) prime set,
+\(M_X=\mathbb E_m W_X\ge\sum_{q\in\mathcal Q_X}1/(q-1)=(\ell(\ell-1))^{-1}\log\log X+O(1)\to\infty\),
+hence \(\mathbb P(W_X=0)\le\exp(-M_X)\to 0\).
+\end{proof}
+
+\begin{corollary}[Bernoulli-extremal bypass kill]\label{C:bernoulli-kill}
+No proof of Bernoulli-weighted PHNC at level \(\ell\) using only extremal arguments on the Kummer log vectors \(\{x_\ell(q)\}\subset\F_\ell^2\) can avoid producing the deterministic \(p_q\)-weighted Kummer equidistribution estimate
+\[
+\max_{A\ne 0}\Biggl|\sum_{\substack{q\le X\\ q\equiv 1\bmod\ell}}p_q\Bigl(\mathbf 1_{A\cdot x_\ell(q)=0}-\tfrac1\ell\Bigr)\Biggr|=o\!\!\left(\sum_{\substack{q\le X\\ q\equiv 1\bmod\ell}}p_q\right).
+\]
+\end{corollary}
+
+\begin{proof}
+Suppose an extremal-only proof exists.  Specialise to the prime set \(\mathcal Q_X=\mathcal P_{\ell,A_0}\cap[1,X]\) for some chosen \(A_0\).  By \cref{T:bernoulli-obstruction}, the Bernoulli sample is hyperplane-concentrated on \(H_{A_0}\) with probability \(1-o(1)\).  Bernoulli-weighted PHNC restricted to \(\mathcal Q_X\) would force this concentration to be incompatible with prime distribution, which is impossible unless the proof controls the deterministic hyperplane discrepancy on \(\mathcal Q_X\) — the displayed quantity.
+\end{proof}
+
+The takeaway is methodological: the Bernoulli branch of KRWS (\cref{T:bernoulli-smoothing}) is the correct finite reduction, but the deterministic weighted Kummer equidistribution input it requires cannot be replaced by purely extremal \(\F_\ell^2\) combinatorics, even after Bernoulli thinning.
+
+\section{KRWS status}
+
+Paper 4's KRWS input should be read in two branches.
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Bernoulli branch.}  For the obstruction vector \(V(m)=\sum_qB_q(m)x_q\), KRWS is the finite theorem \cref{T:bernoulli-smoothing}, conditional only on the same weighted PHNC input used in Paper 11.  No affine hypothesis is needed, because every local step is anchored by the \(0\)-increment option.
+\item \textbf{Deterministic branch.}  For the raw prime-vector step measure \(\mu_{\mathcal Q}=|\mathcal Q|^{-1}\sum_q\delta_{x_q}\), linear hyperplane non-concentration is insufficient by \cref{P:affine-trap}.  The correct finite replacement is affine non-concentration, which gives \cref{T:affine-smoothing}.
+\end{enumerate}
+
+This closes the finite \(L^2\) collision-smoothing part of the Bernoulli-Kummer route under PHNC.  It does not close the analytic sieve-transfer part.  KRC, RTHLS, Kummer-BV, and BVK still encode the passage from finite obstruction-law smoothing to estimates for the von Mangoldt-weighted sequence \(m2^k3^\ell+1\).
+
+\section{Dependency status}
+
+\begin{itemize}[leftmargin=2em]
+\item The affine counterexample is unconditional and finite.
+\item The deterministic smoothing theorem is unconditional once affine non-concentration is assumed.
+\item The Bernoulli-Kummer smoothing theorem is unconditional once the weighted PHNC mass \(W_\ell(\mathcal Q)\) is supplied.
+\item The PHNC high-\(\ell\) corollary is conditional on PHNC and a density floor for the local Bernoulli parameters.
+\item No unconditional proof of PHNC, Kummer-BV, BVK, or Erd\H{o}s--Graham \#203 is asserted.
+\end{itemize}
+
+\end{document}

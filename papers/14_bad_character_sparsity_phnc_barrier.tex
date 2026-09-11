@@ -1,0 +1,316 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+\newtheorem{warning}{Warning}
+\newtheorem{problem}{Problem}
+
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\F}{\mathbb F}
+\newcommand{\C}{\mathbb C}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\supp}{\operatorname{supp}}
+
+\title{Bad-Character Sparsity and the High-\(\ell\) Kummer Non-Concentration Barrier}
+\author{Jared Wilder}
+\date{2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We record a structural bad-character criterion for prime Hecke non-concentration (PHNC) in the fixed-radical Kummer family attached to \(2\) and \(3\).  A single near-trivial Kummer character forces its entire nontrivial cyclic orbit, of size \(\ell-1\), into a medium-deficit bad set.  Consequently any analytic theorem bounding that bad set below \(\ell-1\) proves PHNC.  We then prove the exact finite mean-square identity for this bad set and show that the resulting route is not an unconditional high-\(\ell\) proof: it is equivalent to deterministic vector-fiber equidistribution of the Kummer log vectors.  This exposes a precise barrier and promotes the needed analytic input as a Kummer-sparsity hypothesis, not as a consequence of classical Bombieri--Friedlander--Iwaniec or generic large-sieve technology.
+\end{abstract}
+
+\section{Purpose}
+
+The criterion paper isolates PHNC as the top analytic input in the Erd\H{o}s--Graham \#203 program.  Paper 12 proves the Bernoulli-Kummer smoothing theorem once weighted PHNC is supplied.  Paper 13 proves that an arbitrary-coefficient rank-two large-sieve bridge is false because finite Plancherel has a diagonal vector-fiber term.
+
+This note attacks PHNC directly through bad-character counting.  The outcome is a clean structural criterion and a clean barrier.  It is not an unconditional proof of the high-\(\ell\) seam.
+
+\section{PHNC and Kummer characters}
+
+Let \(\ell\) be prime, \(Q\ge3\), and
+\[
+\mathcal Q_\ell(Q)=\{q\le Q:q\equiv1\bmod \ell,\ q\nmid6\}.
+\]
+For \(q\in\mathcal Q_\ell(Q)\), choose a primitive root \(g_q\bmod q\) and write
+\[
+2=g_q^{u_q},\qquad 3=g_q^{v_q}.
+\]
+Put
+\[
+x_q=(u_q,v_q)\in\F_\ell^2.
+\]
+For \(A=(r,s)\in\F_\ell^2\setminus\{0\}\), define
+\[
+\chi_A(q)=e^{2\pi i A\cdot x_q/\ell}.
+\]
+The condition \(A\cdot x_q=0\) is equivalent to
+\[
+2^r3^s\in(\F_q^*)^\ell.
+\]
+
+\begin{definition}[Prime average and deficit]
+Let \(N=|\mathcal Q_\ell(Q)|\).  For \(A\ne0\), define
+\[
+M_Q(A)=\frac1N\sum_{q\in\mathcal Q_\ell(Q)}\chi_A(q),
+\qquad
+\delta_Q(A)=1-|M_Q(A)|.
+\]
+For \(0<\eta<1\), define
+\[
+B_\eta(\ell,Q)=\{A\in\F_\ell^2\setminus\{0\}:\delta_Q(A)\le\eta\}.
+\]
+\end{definition}
+
+\section{Power-orbit amplification}
+
+\begin{lemma}[Power-stability]\label{L:power}
+Let \(f:X\to S^1\) on a finite probability space and put
+\[
+\delta(f)=1-|\E f|.
+\]
+Then for every integer \(m\ge1\),
+\[
+\delta(f^m)\le m^2\delta(f).
+\]
+\end{lemma}
+
+\begin{proof}
+Choose \(\omega\in S^1\) so that \(\omega^{-1}\E f=|\E f|\), and write \(\omega^{-1}f=e^{it(x)}\).  Then
+\[
+\delta(f)=\E(1-\cos t(x)).
+\]
+Since \(1-\cos(mt)\le m^2(1-\cos t)\),
+\[
+\operatorname{Re}\bigl(\omega^{-m}\E f^m\bigr)
+=1-\E(1-\cos(mt(x)))
+\ge1-m^2\delta(f).
+\]
+Therefore \(|\E f^m|\ge1-m^2\delta(f)\).
+\end{proof}
+
+\begin{lemma}[PHNC failure creates a bad cyclic line]\label{L:orbit}
+Suppose that for some \(A\ne0\),
+\[
+\#\{q\in\mathcal Q_\ell(Q):A\cdot x_q=0\}\ge(1-\varepsilon)N.
+\]
+Then for every \(1\le j\le\ell-1\),
+\[
+\delta_Q(jA)\le 2j^2\varepsilon.
+\]
+In particular, if \(\varepsilon\le(4\ell^2)^{-1}\), then
+\[
+\{A,2A,\ldots,(\ell-1)A\}\subseteq B_{1/2}(\ell,Q),
+\]
+and hence
+\[
+|B_{1/2}(\ell,Q)|\ge\ell-1.
+\]
+\end{lemma}
+
+\begin{proof}
+If \(A\cdot x_q=0\) on a set of mass at least \(1-\varepsilon\), then \(\chi_A(q)=1\) on that set and \(|\chi_A(q)|=1\) everywhere.  Hence
+\[
+|M_Q(A)|\ge (1-\varepsilon)-\varepsilon=1-2\varepsilon.
+\]
+Apply \cref{L:power} to \(f=\chi_A\).  Since \(\chi_A^j=\chi_{jA}\), the result follows.
+\end{proof}
+
+\begin{hypothesis}[Kummer-sparsity]\label{H:sparsity}
+For a given \((\ell,Q)\),
+\[
+|B_{1/2}(\ell,Q)|<\ell-1.
+\]
+\end{hypothesis}
+
+\begin{theorem}[Kummer-sparsity implies PHNC at that scale]\label{T:sparsity-phnc}
+If \cref{H:sparsity} holds, then for every nonzero \(A\in\F_\ell^2\),
+\[
+\#\{q\in\mathcal Q_\ell(Q):A\cdot x_q=0\}
+<
+\left(1-\frac1{4\ell^2}\right)N.
+\]
+\end{theorem}
+
+\begin{proof}
+This is the contrapositive of \cref{L:orbit}.
+\end{proof}
+
+\begin{remark}
+\Cref{T:sparsity-phnc} is intentionally modest in exponent.  The point is not optimization.  The point is that PHNC failure is not isolated: it forces an entire projective line of medium-deficit characters.
+\end{remark}
+
+\section{The exact mean-square route}
+
+Let
+\[
+\mu(v)=\frac1N\#\{q\in\mathcal Q_\ell(Q):x_q=v\},
+\qquad v\in\F_\ell^2.
+\]
+Then
+\[
+M_Q(A)=\sum_{v\in\F_\ell^2}\mu(v)e^{2\pi i A\cdot v/\ell}.
+\]
+
+\begin{theorem}[Bad-character mean square]\label{T:meansquare}
+One has the exact identity
+\[
+\sum_{A\in\F_\ell^2\setminus\{0\}}|M_Q(A)|^2
+=
+\ell^2\sum_{v\in\F_\ell^2}\mu(v)^2-1.
+\]
+\end{theorem}
+
+\begin{proof}
+Finite Plancherel on \(\F_\ell^2\) gives
+\[
+\sum_{A\in\F_\ell^2}|M_Q(A)|^2
+=
+\ell^2\sum_v\mu(v)^2.
+\]
+The \(A=0\) term is \(1\).
+\end{proof}
+
+\begin{corollary}[Mean-square sparsity criterion]\label{C:ms}
+If
+\[
+\ell^2\sum_v\mu(v)^2-1<\frac{\ell-1}{4},
+\]
+then \cref{H:sparsity} holds and therefore \cref{T:sparsity-phnc} applies.
+\end{corollary}
+
+\begin{proof}
+Every \(A\in B_{1/2}\) has \(|M_Q(A)|\ge1/2\).  Thus
+\[
+\frac14|B_{1/2}(\ell,Q)|
+\le
+\sum_{A\ne0}|M_Q(A)|^2.
+\]
+Apply \cref{T:meansquare}.
+\end{proof}
+
+\section{Why the route is a barrier, not a proof}
+
+\Cref{C:ms} is exact and useful, but it is not free.  It asks for deterministic vector-fiber equidistribution of the Kummer log vectors \(x_q\).  This is a stronger distributional object than PHNC itself.
+
+\begin{warning}[Deterministic vector-fiber barrier]
+The mean-square route proves PHNC only after one proves a collision-energy bound for the deterministic prime measure \(\mu\).  Classical finite orthogonality does not supply that bound; it merely names it:
+\[
+\sum_v\mu(v)^2.
+\]
+\end{warning}
+
+\begin{proposition}[Affine hyperplane trap]\label{P:affine}
+Let \(A_0\ne0\) and \(t\in\F_\ell^*\).  Let \(\mu\) be the uniform probability measure on the affine line
+\[
+\{v\in\F_\ell^2:A_0\cdot v=t\}.
+\]
+Then for every nonzero \(A\), the identity hyperplane mass \(\mu\{v:A\cdot v=0\}\) is at most \(1/\ell\), except for \(A\in\F_\ell^*A_0\), where it is \(0\).  Thus linear identity non-concentration holds strongly.  But
+\[
+|M(A_0)|=1.
+\]
+\end{proposition}
+
+\begin{proof}
+If \(A\) is not a scalar multiple of \(A_0\), the two affine/linear equations cut a single point inside the affine line, so the mass is \(1/\ell\).  If \(A=jA_0\), then \(A\cdot v=jt\ne0\) throughout the support.  On the other hand,
+\[
+M(A_0)=\sum_v\mu(v)e^{2\pi i A_0\cdot v/\ell}=e^{2\pi it/\ell}.
+\]
+\end{proof}
+
+\begin{remark}
+This is the same trap exposed from a different angle in the Bernoulli-Kummer smoothing paper.  Linear PHNC controls mass at identity hyperplanes.  Deterministic Fourier smoothing and bad-character mean-square bounds also see affine hyperplane concentration.
+\end{remark}
+
+\section{Analytic status}
+
+The structural result of this note can be summarized as:
+\[
+\boxed{
+\text{bad-character sparsity } |B_{1/2}|<\ell-1
+\Longrightarrow
+\text{PHNC at scale }(\ell,Q).
+}
+\]
+The missing theorem is the sparsity bound.
+
+\begin{problem}[Fixed-radical Kummer bad-character sparsity]\label{P:kummer-sparsity}
+Prove, uniformly for \(\ell\le(\log Q)^B\), that
+\[
+|B_{1/2}(\ell,Q)|<\ell-1.
+\]
+\end{problem}
+
+\begin{warning}[No BFI plug-in]
+Bombieri--Friedlander--Iwaniec type theorems concern primes in arithmetic progressions with well-factorable weights.  They do not directly bound the number of fixed-radical Kummer characters whose prime averages are nearly unimodular.
+\end{warning}
+
+\begin{warning}[No generic large-sieve plug-in]
+Known large sieves for Hecke or \(n\)-th order character families either average over different families than the fixed radicals \(2,3\), keep \(n\) fixed, or carry conductor and degree dependence that is not sufficient for the high-\(\ell\) seam.  A valid plug-in would need to be a fixed-radical, growing-\(\ell\) Kummer large sieve or zero-density theorem with explicit dependence strong enough to force \(|B_{1/2}|=o(\ell)\).
+\end{warning}
+
+\begin{remark}[Chebotarev range caution]
+For each fixed \(\ell\), Chebotarev gives eventual Kummer equidistribution.  A growing-\(\ell\) range must be read from a precise effective Chebotarev theorem and the discriminant/conductor of
+\[
+\Q(\zeta_\ell,(2^r3^s)^{1/\ell}).
+\]
+This note does not assert a paper-grade exponent for that range.  It only records that the high seam
+\[
+(\log Q)^{1-\varepsilon}<\ell\le(\log Q)^B
+\]
+is not reached by the bad-character argument without a new analytic input.
+\end{remark}
+
+\section{Program consequence}
+
+The bad-character route is valuable because it hardens the target:
+\[
+\text{PHNC failure}\Rightarrow\text{an entire cyclic line of bad characters}.
+\]
+That is real amplification.  But the route does not bypass the need for high-\(\ell\) distribution of fixed-radical Kummer characters.  It should therefore be cited as a criterion/barrier note, not as a proof of PHNC.
+
+The next analytic target is either:
+\begin{enumerate}[leftmargin=2em]
+\item a fixed-radical Kummer large-sieve or zero-density theorem proving \cref{P:kummer-sparsity}; or
+\item a Bernoulli-weighted extremal theorem showing that the actual random obstruction law avoids the deterministic affine trap under weaker weighted non-concentration.
+\end{enumerate}
+
+\section{Conclusion}
+
+V12 strengthens the program by removing a false hope and replacing it with a theorem-grade criterion.  A single PHNC failure is expensive: it creates \(\ell-1\) medium-bad characters.  To turn that expense into a contradiction, one needs a genuine high-\(\ell\) fixed-radical Kummer sparsity theorem.  That theorem is the wall.
+
+\begin{thebibliography}{9}
+
+\bibitem{BFI}
+E. Bombieri, J. Friedlander, and H. Iwaniec.
+\newblock Primes in arithmetic progressions to large moduli.
+\newblock \emph{Acta Mathematica}, 156:203--251, 1986.
+
+\bibitem{GoldmakherLouvel}
+L. Goldmakher and B. Louvel.
+\newblock A quadratic large sieve inequality over number fields.
+\newblock \emph{Math. Proc. Cambridge Philos. Soc.}, 154:193--212, 2013.
+
+\bibitem{TZ}
+J. Thorner and A. Zaman.
+\newblock A unified and improved Chebotarev density theorem.
+\newblock \emph{Algebra \& Number Theory}, 13(5):1039--1068, 2019.
+
+\end{thebibliography}
+
+\end{document}

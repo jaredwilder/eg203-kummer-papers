@@ -1,0 +1,258 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Span}{\operatorname{Span}}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\C}{\mathbb C}
+
+\title{Kummer-Fourier Collision Variance and Weighted Hyperplane Matroid Sums}
+\author{Jared Wilder}
+\date{2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note corrects a tempting but false linear product formula for Kummer collision excess.  The corrected identity is exact finite algebra: for a CRT product of local Kummer obstruction indicators, the collision variance of the induced obstruction-vector distribution is a Plancherel sum whose local factors are squared complex characteristic functions.  Equivalently, the variance is a weighted hyperplane-arrangement sum over the dual of the Kummer log matroid.  The formula is unconditional and finite; no analytic equidistribution theorem, PHNC input, or Erd\H{o}s--Graham resolution is asserted.
+\end{abstract}
+
+\section{Setup}
+
+Let \(\mathcal Q\) be a finite set of primes and put
+\[
+P=\prod_{q\in\mathcal Q}q.
+\]
+Let \(\ell\) be prime, and let \(x_q\in\F_\ell^r\) be the Kummer log row attached to \(q\) for a fixed rank-\(r\) base vector \(\mathbf a=(a_1,\ldots,a_r)\).  Write
+\[
+\Gamma_q=\langle a_1,\ldots,a_r\rangle\subset\F_q^*
+\]
+and
+\[
+p_q=\frac{|\Gamma_q|}{q-1}.
+\]
+For \(m\in(\Z/P\Z)^*\), define the local obstruction indicator
+\[
+B_q(m)=\one_{\Gamma_q}(-m_q^{-1}),
+\]
+where \(m_q\) denotes the image of \(m\) in \(\F_q^*\).  By the Chinese remainder theorem, as \(m\) varies uniformly over \((\Z/P\Z)^*\), the variables \(B_q\) are independent Bernoulli variables with
+\[
+\mathbb P(B_q=1)=p_q.
+\]
+
+\begin{definition}[Bernoulli-Kummer obstruction vector]
+Define
+\[
+V(m)=\sum_{q\in\mathcal Q} B_q(m)x_q\in\F_\ell^r.
+\]
+Let
+\[
+N(v)=\#\{m\in(\Z/P\Z)^*:V(m)=v\},
+\qquad v\in\F_\ell^r,
+\]
+and
+\[
+\bar N=\frac{\varphi(P)}{\ell^r}.
+\]
+The collision excess of \(N\) is
+\[
+\mathcal C_\ell(N)=\sum_{v\in\F_\ell^r}(N(v)-\bar N)^2.
+\]
+\end{definition}
+
+\section{The false linear formula}
+
+The following expression is a useful failed route:
+\[
+\ell^{-2r}\varphi(P)^2
+\sum_{A\in\F_\ell^r\setminus\{0\}}
+\left(
+\prod_{q\mid P}
+\left[
+1+\frac{\ell\one_{A\cdot x_q=0}-1}{q-1}
+\right]
+-1
+\right).
+\]
+It is not equal to \(\mathcal C_\ell(N)\) in general.  The failure is structural: Plancherel requires squared complex Fourier coefficients, while the displayed product is a linear real proxy.  The factor \(\ell^{-2r}\) and the internal subtraction are also incompatible with the standard finite Fourier normalization.
+
+\begin{example}[Minimal sign and normalization failure]
+Let \(r=1\), \(\ell=2\), \(\mathcal Q=\{q\}\), and \(x_q=1\).  Then \(V(m)=B_q(m)\in\F_2\).  Hence
+\[
+N(1)=|\Gamma_q|,
+\qquad
+N(0)=q-1-|\Gamma_q|.
+\]
+Therefore
+\[
+\mathcal C_2(N)
+=
+2\left(|\Gamma_q|-\frac{q-1}{2}\right)^2
+=
+\frac{(q-1)^2}{2}(1-2p_q)^2.
+\]
+The false linear formula gives a different value.  For instance, at \(q=3\), \(a_1=2\), one has \(p_q=1\), so \(\mathcal C_2(N)=2\), while the false expression gives a nonmatching linear value.  The identity is false as stated.
+\end{example}
+
+\section{Exact Kummer-Fourier collision variance}
+
+Let
+\[
+\zeta_\ell=e^{2\pi i/\ell}.
+\]
+For \(A\in\F_\ell^r\), define the finite Fourier coefficient
+\[
+\widehat N(A)=\sum_{v\in\F_\ell^r}N(v)\zeta_\ell^{A\cdot v}.
+\]
+
+\begin{theorem}[Exact Kummer-Fourier collision variance]\label{T:kummer-fourier-collision}
+With notation as above,
+\[
+\mathcal{C}_\ell(N)=
+\frac{\varphi(P)^2}{\ell^r}
+\sum_{A\in\F_\ell^r\setminus\{0\}}
+\prod_{q\in\mathcal Q}
+\left[
+1-2p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right)
+\right].
+\]
+Here \(A\cdot x_q\) is represented by any integer lift modulo \(\ell\); the cosine is well-defined.
+\end{theorem}
+
+\begin{proof}
+By finite Fourier inversion and Plancherel on \(\F_\ell^r\),
+\[
+\mathcal C_\ell(N)=
+\ell^{-r}\sum_{A\ne0}|\widehat N(A)|^2.
+\]
+The \(A=0\) term is excluded because subtracting \(\bar N\) removes the constant component.
+
+For \(A\in\F_\ell^r\),
+\[
+\widehat N(A)
+=
+\sum_{m\in(\Z/P\Z)^*}\zeta_\ell^{A\cdot V(m)}
+=
+\sum_{m\in(\Z/P\Z)^*}
+\prod_{q\in\mathcal Q}\zeta_\ell^{B_q(m)(A\cdot x_q)}.
+\]
+Under the uniform measure on \((\Z/P\Z)^*\), CRT makes the variables \(B_q\) independent, so
+\[
+\widehat N(A)
+=
+\varphi(P)
+\prod_{q\in\mathcal Q}
+\E\left[\zeta_\ell^{B_q(A\cdot x_q)}\right].
+\]
+For a fixed \(q\), since \(B_q\) is Bernoulli with parameter \(p_q\),
+\[
+\E\left[\zeta_\ell^{B_q(A\cdot x_q)}\right]
+=
+(1-p_q)+p_q\zeta_\ell^{A\cdot x_q}.
+\]
+Thus
+\[
+|\widehat N(A)|^2
+=
+\varphi(P)^2
+\prod_{q\in\mathcal Q}
+\left|(1-p_q)+p_q\zeta_\ell^{A\cdot x_q}\right|^2.
+\]
+Writing \(\theta_q=2\pi(A\cdot x_q)/\ell\),
+\[
+\left|(1-p_q)+p_q e^{i\theta_q}\right|^2
+=
+(1-p_q+p_q\cos\theta_q)^2+(p_q\sin\theta_q)^2
+=
+1-2p_q(1-p_q)(1-\cos\theta_q).
+\]
+Substituting into Plancherel gives the formula.
+\end{proof}
+
+\begin{corollary}[Binary specialization]\label{C:binary-specialization}
+When \(\ell=2\),
+\[
+\mathcal{C}_2(N)=
+\frac{\varphi(P)^2}{2^r}
+\sum_{A\in\F_2^r\setminus\{0\}}
+\prod_{q\in\mathcal Q}
+\left[
+1-4p_q(1-p_q)\bigl(1-\one_{A\cdot x_q=0}\bigr)
+\right].
+\]
+\end{corollary}
+
+\begin{proof}
+For \(\ell=2\), \(\cos(\pi t)=1\) when \(t=0\) in \(\F_2\), and \(\cos(\pi t)=-1\) when \(t=1\).  Substituting in \cref{T:kummer-fourier-collision} gives the claim.
+\end{proof}
+
+\section{Matroid interpretation}
+
+Let \(M_\ell(\mathcal Q;\mathbf a)\) be the representable Kummer log matroid on ground set \(\mathcal Q\), represented by the rows \(x_q\in\F_\ell^r\).  For \(A\ne0\), the condition \(A\cdot x_q=0\) says that the row \(x_q\) lies in the hyperplane
+\[
+H_A=\{x\in\F_\ell^r:A\cdot x=0\}.
+\]
+Thus \cref{T:kummer-fourier-collision} is a weighted sum over hyperplanes of the dual arrangement.
+
+\begin{definition}[Kummer hyperplane weight]
+For \(A\ne0\), define
+\[
+W_A(\mathcal Q)=
+\prod_{q\in\mathcal Q}
+\left[
+1-2p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right)
+\right].
+\]
+\end{definition}
+
+\begin{corollary}[Weighted hyperplane-arrangement form]
+The collision excess is
+\[
+\mathcal C_\ell(N)
+=
+\frac{\varphi(P)^2}{\ell^r}
+\sum_{A\ne0}W_A(\mathcal Q).
+\]
+For \(\ell=2\), \(W_A\) depends only on the subset of rows outside the hyperplane \(H_A\):
+\[
+W_A(\mathcal Q)=
+\prod_{q:x_q\notin H_A}
+\left[1-4p_q(1-p_q)\right].
+\]
+\end{corollary}
+
+\begin{remark}[Not an ordinary Tutte evaluation]
+The formula is not, in general, a single ordinary Tutte-polynomial evaluation \(T_M(x,y)\).  The weights are prime-dependent through \(p_q\), and for \(\ell>2\) they depend on the nonzero value of \(A\cdot x_q\), not only on whether it vanishes.  The honest description is a weighted hyperplane-arrangement sum, equivalent in the binary uniform-weight case to a multivariate Tutte/Potts-style specialization.
+\end{remark}
+
+\section{Dependency status}
+
+\begin{itemize}[leftmargin=2em]
+\item The theorem is exact finite algebra: dependency class \(E\).
+\item The proof uses only CRT independence and finite Fourier Plancherel.
+\item No PHNC, BVK, Kummer-BV, GRH, Chebotarev error term, or Erd\H{o}s--Graham conclusion is used.
+\item The result strengthens the finite algebraic stack by replacing a false linear product with the correct squared-modulus product.
+\end{itemize}
+
+\end{document}

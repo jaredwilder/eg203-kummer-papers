@@ -1,0 +1,229 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\Li}{\operatorname{Li}}
+\newcommand{\C}{\mathbb C}
+
+\title{Kummer Row-Balance and the Chebotarev--Matroid Link}
+\author{Jared Wilder}
+\date{2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper 9 reduces Kummer collision decay to finite row-balance or angular-energy lower bounds for the Kummer log matrix.  This note identifies exactly where those lower bounds come from.  Pure finite rank data cannot force row-balance: high-rank matrices may still have all rows concentrated in a hyperplane.  For actual Kummer rows, however, fixed-\(\ell\) Chebotarev equidistribution supplies row-balance unconditionally for multiplicatively independent bases.  This proves exponential collision decay in the fixed-\(\ell\), density-floor regime.  The high-\(\ell\) regime is separated as a conditional analytic seam: it requires a uniform hyperplane or angular non-concentration hypothesis and is not proved here.
+\end{abstract}
+
+\section{Finite row-balance cannot be rank-only}
+
+Let \(X=(x_q)_{q\in\mathcal Q}\) be a matrix with rows \(x_q\in\F_\ell^r\).  For \(A\in\F_\ell^r\setminus\{0\}\), define the hyperplane
+\[
+H_A=\{x\in\F_\ell^r:A\cdot x=0\}
+\]
+and the cut size
+\[
+d_A(X)=\#\{q\in\mathcal Q:x_q\notin H_A\}.
+\]
+Put
+\[
+d(X)=\min_{A\ne0}d_A(X).
+\]
+
+\begin{proposition}[No rank-only lower bound]\label{P:no-rank-only}
+There is no function \(f(r,|\mathcal Q|)\gg|\mathcal Q|\) such that every rank-\(r\) row matrix \(X\in\F_\ell^{|\mathcal Q|\times r}\) satisfies \(d(X)\ge f(r,|\mathcal Q|)\).
+\end{proposition}
+
+\begin{proof}
+Fix a basis vector \(e_1\in\F_\ell^r\).  Put \(N-r\) rows equal to \(e_1\), and add \(e_2,\ldots,e_r\) once each.  The resulting matrix has rank \(r\).  Let \(A\ne0\) satisfy \(A\cdot e_1=0\) and \(A\cdot e_i\ne0\) for at least one \(i\ge2\); such an \(A\) exists for \(r\ge2\).  Then only the \(O(r)\) exceptional basis rows are cut by \(A\), so \(d(X)\le r-1\), independently of \(N=|\mathcal Q|\).  Thus no linear lower bound follows from rank alone.
+\end{proof}
+
+\begin{remark}
+This is the finite myopia guardrail.  Paper 9 supplies a perfect finite machine, but the machine needs distributional fuel.  In arithmetic applications that fuel is Kummer-log non-concentration.
+\end{remark}
+
+\section{Kummer logs as Frobenius coordinates}
+
+Fix a prime \(\ell\).  Let
+\[
+\mathbf a=(a_1,\ldots,a_r)\in(\Q^*)^r
+\]
+be multiplicatively independent modulo \(\ell\)-th powers in \(\Q(\zeta_\ell)^*\).  Put
+\[
+K_\ell=\Q(\zeta_\ell,a_1^{1/\ell},\ldots,a_r^{1/\ell}).
+\]
+Then
+\[
+\Gal(K_\ell/\Q(\zeta_\ell))\cong\F_\ell^r.
+\]
+For primes \(q\nmid \ell a_1\cdots a_r\) with \(q\equiv1\pmod\ell\), the Frobenius class over \(\Q(\zeta_\ell)\) determines a Kummer log row
+\[
+x_q\in\F_\ell^r.
+\]
+For \(A=(A_1,\ldots,A_r)\ne0\), the condition
+\[
+A\cdot x_q=0
+\]
+is equivalent to
+\[
+a_1^{A_1}\cdots a_r^{A_r}\in(\F_q^*)^\ell.
+\]
+
+\section{Fixed-\texorpdfstring{\(\ell\)}{ell} row-balance}
+
+Let
+\[
+\mathcal Q_\ell(X)=\{q\le X:q\equiv1\pmod\ell,\ q\nmid \ell a_1\cdots a_r\}.
+\]
+
+\begin{theorem}[Fixed-\(\ell\) Kummer row-balance]\label{T:fixed-ell-row-balance}
+Assume \(\ell\), \(r\), and \(\mathbf a\) are fixed, and that the classes of \(a_1,\ldots,a_r\) are independent in \(\Q(\zeta_\ell)^*/(\Q(\zeta_\ell)^*)^\ell\).  Then, as \(X\to\infty\), for every \(A\in\F_\ell^r\setminus\{0\}\),
+\[
+\#\{q\in\mathcal Q_\ell(X):A\cdot x_q=0\}
+=
+\frac1\ell|\mathcal Q_\ell(X)|+o(|\mathcal Q_\ell(X)|),
+\]
+and therefore
+\[
+d_A(X)=
+\#\{q\in\mathcal Q_\ell(X):A\cdot x_q\ne0\}
+=
+\left(1-\frac1\ell\right)|\mathcal Q_\ell(X)|+o(|\mathcal Q_\ell(X)|).
+\]
+Since the set of nonzero \(A\)'s is finite for fixed \(\ell,r\), the same estimate holds uniformly in \(A\ne0\).
+\end{theorem}
+
+\begin{proof}
+The condition \(A\cdot x_q=0\) cuts out a hyperplane in
+\(\Gal(K_\ell/\Q(\zeta_\ell))\cong\F_\ell^r\), hence a proportion \(1/\ell\) of the relative Galois group.  Chebotarev's density theorem over the fixed extension \(K_\ell/\Q(\zeta_\ell)\), restricted to rational primes \(q\equiv1\pmod\ell\), gives the stated asymptotic.  There are only \(\ell^r-1\) nonzero dual directions, so the error remains \(o(|\mathcal Q_\ell(X)|)\) uniformly after taking the maximum over \(A\ne0\).
+\end{proof}
+
+\section{Angular energy and collision decay}
+
+For \(q\in\mathcal Q_\ell(X)\), let
+\[
+p_q=\frac{|\Gamma_q|}{q-1}.
+\]
+Define
+\[
+\mathcal E(A)=
+\sum_{q\in\mathcal Q_\ell(X)}
+2p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right).
+\]
+
+\begin{theorem}[Fixed-\(\ell\) angular-energy floor]\label{T:fixed-ell-energy}
+Assume the hypotheses of \cref{T:fixed-ell-row-balance}.  If there is a constant \(0<\alpha\le1/2\) such that
+\[
+\alpha\le p_q\le1-\alpha
+\qquad(q\in\mathcal Q_\ell(X)),
+\]
+then
+\[
+\min_{A\ne0}\mathcal E(A)
+\ge
+2\alpha(1-\alpha)|\mathcal Q_\ell(X)|(1-o(1)).
+\]
+\end{theorem}
+
+\begin{proof}
+For fixed \(A\ne0\), Chebotarev gives equidistribution of \(A\cdot x_q\) in \(\F_\ell\).  Hence
+\[
+\sum_{q\in\mathcal Q_\ell(X)}
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right)
+=
+|\mathcal Q_\ell(X)|(1-o(1)),
+\]
+because
+\[
+\frac1\ell\sum_{t\in\F_\ell}\cos\frac{2\pi t}{\ell}=0.
+\]
+The density-floor assumption gives \(p_q(1-p_q)\ge\alpha(1-\alpha)\).  Since the nonzero set of \(A\)'s is finite, the estimate is uniform in \(A\ne0\).
+\end{proof}
+
+\begin{corollary}[Fixed-\(\ell\) exponential collision decay]\label{C:fixed-ell-decay}
+Under the hypotheses of \cref{T:fixed-ell-energy}, the normalized collision excess from Paper 8 satisfies
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+(1-\ell^{-r})
+\exp\left(-2\alpha(1-\alpha)|\mathcal Q_\ell(X)|(1-o(1))\right).
+\]
+\end{corollary}
+
+\begin{proof}
+Apply the Paper 9 angular-energy bound
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+(1-\ell^{-r})e^{-\mathcal E_*},
+\qquad
+\mathcal E_*=\min_{A\ne0}\mathcal E(A),
+\]
+and then substitute \cref{T:fixed-ell-energy}.
+\end{proof}
+
+\section{The high-\texorpdfstring{\(\ell\)}{ell} seam}
+
+The previous section is fixed-\(\ell\).  It does not prove the high-\(\ell\) non-concentration needed in the analytic seam of the EG203 program.  As \(\ell\) grows, the degree and discriminant of \(K_\ell\) grow, and fixed-field Chebotarev error terms no longer supply uniform row-balance in the range \(\ell\le(\log X)^B\).
+
+\begin{hypothesis}[Weighted angular non-concentration]\label{H:angular-nc}
+There is a constant \(\eta>0\) such that, uniformly for all nonzero \(A\in\F_\ell^r\),
+\[
+\sum_{q\in\mathcal Q}
+p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right)
+\ge
+\eta|\mathcal Q|.
+\]
+\end{hypothesis}
+
+\begin{corollary}[Conditional high-\(\ell\) collision decay]\label{C:conditional-high-ell}
+If \cref{H:angular-nc} holds for a finite prime set \(\mathcal Q\), then
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+(1-\ell^{-r})e^{-2\eta|\mathcal Q|}.
+\]
+\end{corollary}
+
+\begin{proof}
+The hypothesis gives \(\mathcal E_*\ge2\eta|\mathcal Q|\).  The Paper 9 angular-energy bound gives the result.
+\end{proof}
+
+\begin{remark}[Relation to PHNC]
+For \(r=2\) and \(\mathbf a=(2,3)\), the condition \(A\cdot x_q=0\) is exactly
+\[
+2^{A_1}3^{A_2}\in(\F_q^*)^\ell.
+\]
+Thus hyperplane row-balance is the finite-matrix form of prime Hecke non-concentration.  The angular hypothesis above is stronger for odd \(\ell\), because it controls not only whether \(A\cdot x_q\) vanishes but also whether nonzero values cluster near small angles.
+\end{remark}
+
+\section{Dependency status}
+
+\begin{itemize}[leftmargin=2em]
+\item \Cref{P:no-rank-only} is finite linear algebra.
+\item \Cref{T:fixed-ell-row-balance,T:fixed-ell-energy,C:fixed-ell-decay} are unconditional for fixed \(\ell\), conditional only on the stated multiplicative independence and density-floor assumptions.
+\item \Cref{C:conditional-high-ell} is explicitly conditional on weighted angular non-concentration.
+\item No high-\(\ell\) PHNC theorem, Kummer-BV theorem, GRH theorem, or Erd\H{o}s--Graham \#203 conclusion is asserted.
+\end{itemize}
+
+\end{document}

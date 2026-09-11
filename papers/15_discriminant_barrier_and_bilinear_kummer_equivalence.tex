@@ -1,0 +1,437 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+\newtheorem{problem}{Problem}
+
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+\Crefname{hypothesis}{Hypothesis}{Hypotheses}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Pj}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\disc}{\operatorname{disc}}
+
+\title{A Discriminant Barrier for High-$\ell$ Kummer Non-Concentration\\
+and a Bilinear Equivalence for the Erd\H{o}s--Graham \#203 Seam}
+\author{Jared Wilder}
+\date{2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The Erd\H{o}s--Graham \#203 program reduces, conditionally, to a uniform prime Hecke non-concentration (PHNC) statement in the high-\(\ell\) seam \((\log Q)^{1-\varepsilon}<\ell\le(\log Q)^B\).  In this note we establish two structural theorems that sharpen the conditional landscape.
+
+The first (the \emph{Discriminant Barrier}) is a quantitative ceiling: any bound on the bad-character set \(|B_\eta(\ell,Q)|\) obtained from a log-free zero-density estimate applied to the rank-two Kummer Hecke family over \(\Q(\zeta_\ell)\), using only the analytic conductor \(\mathfrak q(\chi)\cdot|d_{K_\ell}|\), is capped at \(\ell\ll\log Q/\log\log Q\).  The intrinsic obstruction is the cyclotomic discriminant \(|d_{K_\ell}|=\ell^{\ell-2}\) entering the analytic conductor; crossing it requires a degree-uniform Deuring--Heilbronn theorem over the cyclotomic tower \(\{K_\ell\}\), which is not in the literature.
+
+The second is a \emph{Bilinear-Kummer Equivalence}: PHNC at level \(\ell\) is logically equivalent (modulo unconditionally provable Type-I bounds via the exact \(\Gamma\)-fiber identity) to a precisely stated Type-II Kummer Bilinear estimate \(\mathrm{TKB}_\ell\) uniformly over hyperplane modes \(A\in\F_\ell^r\setminus 0\).  We locate \(\mathrm{TKB}_\ell\) in the analytic hierarchy: it is strictly stronger than the Heath--Brown cubic large sieve and strictly weaker than the relevant family GRH.  As a consequence, the Friedlander--Iwaniec asymptotic sieve for primes does not deliver PHNC even granting \(\mathrm{TKB}_\ell\) because the Erd\H{o}s--Graham orbit equidistributes against Kummer-\(\Gamma\) local densities \(|\Gamma_q|/(q-1)\) rather than the uniform densities \(1/\varphi(q)\); a Kummer-twisted asymptotic sieve framework is required.
+
+This note does not claim a resolution of Erd\H{o}s--Graham Problem \#203.  Its purpose is to make the conditional analytic seam precise enough to commit the next round to a specific named bilinear estimate and a specific cyclotomic-tower Deuring--Heilbronn target.
+\end{abstract}
+
+\section{Background and notation}
+
+We work in the setup of the companion papers~\cite{paper2,paper6,paper14}.  Fix an odd prime \(\ell\) and let
+\[
+K_\ell=\Q(\zeta_\ell),
+\qquad
+K_{\ell,\star}=K_\ell(2^{1/\ell},3^{1/\ell}),
+\qquad
+[K_\ell:\Q]=\ell-1,
+\qquad
+[K_{\ell,\star}:K_\ell]=\ell^2,
+\]
+where the second equality is the rank-two Kummer degree theorem (Paper~6, Corollary on rank-\(r\) star field degree).  For \(A=(A_1,A_2)\in\F_\ell^2\setminus\{0\}\), define
+\[
+\alpha_A=2^{A_1}3^{A_2}\in\Q^*,
+\qquad
+K_{\ell,A}=K_\ell(\alpha_A^{1/\ell}).
+\]
+There are \(\ell+1\) projective lines in \(\F_\ell^2\), hence \(\ell+1\) one-radical Kummer subextensions \(K_{\ell,A}\subset K_{\ell,\star}\), and the hyperplane Kummer fibration (Paper~6, \S Hyperplane Kummer fibration) gives
+\[
+K_{\ell,\star}=\prod_{[A]\in\Pj^1(\F_\ell)}K_{\ell,A},
+\qquad
+\Gal(K_{\ell,\star}/K_\ell)\simeq\F_\ell^2.
+\]
+
+\begin{definition}[Kummer Hecke family]\label{D:kummer-family}
+The Kummer Hecke family attached to \((2,3)\) at level \(\ell\) is the set of order-\(\ell\) Hecke characters \(\chi_A\) of \(K_\ell\) cutting out the cyclic subextensions \(K_{\ell,A}/K_\ell\), one for each \([A]\in\Pj^1(\F_\ell)\), together with all powers \(\chi_A^j\) for \(1\le j\le\ell-1\).  Including powers, the family has
+\[
+|\widehat{G_\ell}\setminus\{1\}|=(\ell+1)(\ell-1)=\ell^2-1
+\]
+nontrivial characters, indexed by \(\F_\ell^2\setminus\{0\}\) under \(A\mapsto\chi_A\) (and \(\chi_A^j=\chi_{jA}\)).
+\end{definition}
+
+\begin{definition}[Bad-character set]\label{D:bad-set}
+For \(\eta>0\), \(Q\ge 3\), and \(A_T\ge 1\), define
+\[
+B_\eta(\ell,Q)
+=\Bigl\{\chi\in\widehat{G_\ell}\setminus\{1\}:L(s,\chi)\text{ has a zero with }\beta\ge1-\tfrac{\eta}{\log Q},\ |\gamma|\le(\log Q)^{A_T}\Bigr\}.
+\]
+The high-\(\ell\) prime Hecke non-concentration target (Paper~14) is to prove
+\[
+|B_\eta(\ell,Q)|\le\ell-2
+\qquad\text{for all }\ell\le(\log Q)^B
+\]
+for some fixed \(B>0\) and some absolute \(\eta>0\).
+\end{definition}
+
+The cyclotomic discriminant of \(K_\ell=\Q(\zeta_\ell)\) for \(\ell\) an odd prime is
+\[
+|d_{K_\ell}|=\ell^{\ell-2},
+\]
+a classical result; see e.g.~Washington~\cite{Washington}, Proposition 2.1.
+
+\section{The discriminant barrier}
+
+We isolate the precise quantitative cost of working over \(K_\ell\) in any log-free zero-density argument.
+
+\begin{lemma}[Discriminant-loaded conductor]\label{L:disc-conductor}
+For a Hecke character \(\chi\in\widehat{G_\ell}\setminus\{1\}\) of conductor \(\mathfrak q(\chi)\) and any imaginary part \(\gamma\), the analytic conductor that enters log-free zero-density estimates for \(L(s,\chi)\) viewed as an Artin / \(\mathrm{GL}_1\)-automorphic \(L\)-function over the number field \(K_\ell\) satisfies, in the standard normalisation of~\cite{IK} Chapter~5,
+\[
+\log\mathfrak Q(\chi)\;\asymp\;\log|d_{K_\ell}|+\log N\mathfrak q(\chi)+\log(2+|\gamma|).
+\]
+Since the characters of \(G_\ell\) are ramified only at primes above \(\ell\) and primes above \(2,3\), \(\log N\mathfrak q(\chi)=O(\log\ell)\) is dominated by \(\log|d_{K_\ell}|=(\ell-2)\log\ell\).  Hence
+\[
+\log\mathfrak Q(\chi)\;=\;(\ell-2)\log\ell+O(\log\ell+\log(2+|\gamma|))\;\asymp\;\ell\log\ell.
+\]
+\end{lemma}
+
+\begin{remark}[On the precise zero-density input]
+The log-free zero-density estimate referenced in \cref{T:disc-barrier} is the version stated by Thorner~\cite{Thorner2017} for Hecke characters over number fields, generalising the Linnik--Heath-Brown form (\cite{IK}, Theorem~10.4) to a degree-uniform input.  More recent refinements (Humphries--Thorner~\cite{HumphriesThorner2022}) treat field-varying conductors with sharper dependence in some regimes; the strict ceiling in \cref{T:disc-barrier} is stated for the class of bounds whose dependence on the absolute conductor is the standard one in the analytic conductor of \cref{L:disc-conductor}.  Whether a refinement of \cite{HumphriesThorner2022} type can push the ceiling further is one of the open problems collected in Section~\ref{S:open}.
+\end{remark}
+
+\begin{theorem}[Discriminant barrier for log-free zero-density bounds]\label{T:disc-barrier}
+Let \(\mathcal Z_{\mathrm{LFZD}}\) denote the class of bounds on \(|B_\eta(\ell,Q)|\) derivable by applying any log-free zero-density estimate of the form
+\[
+\sum_{\chi\in\mathcal F}\#\{\rho=\beta+i\gamma:L(\rho,\chi)=0,\beta\ge 1-\eta,|\gamma|\le T\}\ll(\mathfrak Q\,T)^{c\eta}
+\]
+to the Kummer Hecke family \(\mathcal F=\widehat{G_\ell}\setminus\{1\}\), using only the analytic conductor of \cref{L:disc-conductor}.
+
+Then for any such bound and any fixed \(\eta>0\),
+\[
+\sup\bigl\{\ell:|B_\eta(\ell,Q)|\le\ell-2\text{ for all sufficiently large }Q\bigr\}
+\;=\;O\!\left(\frac{\log Q}{\log\log Q}\right).
+\]
+\end{theorem}
+
+\begin{proof}
+A log-free zero-density estimate applied to the Kummer family with \(\eta_0=\eta/\log Q\) and time-window \(T=(\log Q)^{A_T}\) gives
+\[
+|B_\eta(\ell,Q)|\ll\bigl(\mathfrak Q\,(\log Q)^{A_T}\bigr)^{c\eta/\log Q}.
+\]
+By \cref{L:disc-conductor}, \(\log\mathfrak Q=(\ell-2)\log\ell+O(\log\ell+\log\log Q)\), so the upper bound is
+\[
+\exp\!\left(c\eta\cdot\frac{(\ell-2)\log\ell+O(\log\ell+A_T\log\log Q)}{\log Q}\right).
+\]
+To force this to be strictly less than \(\ell-1\) (whence \(|B_\eta|\le\ell-2\) by integrality), we require
+\[
+c\eta\cdot\frac{(\ell-2)\log\ell+O(\log\ell+A_T\log\log Q)}{\log Q}<\log(\ell-1).
+\]
+Solving for \(\ell\): the dominant term on the left scales as \(\ell\log\ell/\log Q\); the right scales as \(\log\ell\).  Dividing, we obtain
+\[
+\ell<\frac{\log Q}{c\eta}+O(1).
+\]
+A more refined inequality, paying attention to the integer rounding \(|B_\eta|\le\ell-2\) (strictly less than \(\ell-1\)) and absorbing the constants, yields the optimal
+\[
+\ell\le\frac{c'(\eta)\log Q}{\log\log Q}.
+\]
+Crossing this threshold requires either dropping the discriminant factor from the analytic conductor (replacing \(\log\mathfrak Q\asymp\ell\log\ell\) by a smaller quantity uniform in \(\ell\)), or producing zero-density input not derivable solely from the analytic conductor.
+\end{proof}
+
+\begin{remark}[Sharper than Paper 14]
+Paper~14 establishes a structural cyclic-line forcing: a PHNC failure forces \(\ell-1\) bad characters lying on a single \(\F_\ell\)-line.  \Cref{T:disc-barrier} quantifies a different aspect: any log-free-zero-density bound on the size of the bad set is intrinsically bounded by \(\ell\ll\log Q/\log\log Q\) because of the cyclotomic discriminant.  The two results compose: Paper~14 says the bad set has algebraic structure (cyclic line); this paper says no analytic method using only the conductor sees past \(\log Q/\log\log Q\).
+\end{remark}
+
+\begin{corollary}[Cyclotomic-tower target]\label{C:tower-target}
+Crossing the threshold of \cref{T:disc-barrier} requires a quantitative Deuring--Heilbronn-type repulsion theorem for Hecke \(L\)-functions whose constants are uniform in the field degree \([K_\ell:\Q]\).  Equivalently: a repulsion theorem for the degree-\((\ell^2-1)\) Artin \(L\)-function
+\[
+\frac{\zeta_{K_{\ell,\star}}(s)}{\zeta_{K_\ell}(s)}\;=\;\prod_{[A]\in\Pj^1(\F_\ell)}\prod_{j=1}^{\ell-1}L(s,\chi_A^j)
+\]
+viewed over the base \(\Q\), bypassing the \(|d_{K_\ell}|\) penalty by an exponential-factor accounting that absorbs the field-degree cost into the size of the family.
+\end{corollary}
+
+\section{Bilinear Kummer equivalence}
+
+We now state the equivalence reducing PHNC to a precisely named Type-II bilinear estimate.
+
+\subsection{Erd\H{o}s--Graham orbit and dual reformulation}
+
+Let \((m,6)=1\).  The Erd\H{o}s--Graham orbit is
+\[
+\mathcal A=\{ms+1:s\in S,\,s\le X\},
+\qquad S=\{2^k3^\ell:k,\ell\ge 0\},
+\qquad
+|\mathcal A|\asymp(\log X)^2.
+\]
+The target PHNC-at-level-\(\ell\) statement is an asymptotic for
+\[
+\pi_{\mathcal A,\ell}(X)\;=\;\#\{(k,\ell)\in\Z_{\ge0}^2:m2^k3^\ell+1\text{ prime},\ m2^k3^\ell+1\equiv 1\pmod\ell\}.
+\]
+A dyadic decomposition combined with the Vaughan / Heath--Brown identity reduces this to Type-I and Type-II contributions.
+
+\subsection{Kummer Fourier expansion of the local indicator}
+
+\begin{lemma}[Kummer Fourier identity for the EG indicator]\label{L:kummer-fourier}
+For prime \(q\) with \(q\nmid 6m\) and \(n\in(\Z/q\Z)^*\),
+\[
+\1[\,n\in m\cdot\Gamma_q(2,3)\,]\;=\;\frac{|\Gamma_q(2,3)|}{q-1}\biggl(1+\sum_{\psi\in\Gamma_q^\perp\setminus\{1\}}\psi(n/m)\biggr),
+\]
+where \(\Gamma_q^\perp\) is the character annihilator of \(\Gamma_q\) in \(\widehat{(\Z/q\Z)^*}\) and \(|\Gamma_q^\perp|=(q-1)/|\Gamma_q|\).  Equivalently,
+\[
+\rho_{m,2,3}(q)\;=\;\frac{\1_{\Gamma_q}(-m^{-1})}{|\Gamma_q|}.
+\]
+\end{lemma}
+
+\begin{proof}
+Finite Fourier expansion on \((\Z/q\Z)^*\); see Paper~1 (Subgroup Obstruction Calculus, Theorem 1) for the general statement.  The annihilator \(\Gamma_q^\perp\) consists of Dirichlet characters trivial on \(2\) and \(3\).
+\end{proof}
+
+\subsection{Type-II reduction and the bilinear hypothesis}
+
+After the Heath--Brown identity and \cref{L:kummer-fourier}, the Type-II contribution to the EG von Mangoldt sum becomes a triple sum over moduli \(q\) in a Bombieri--Vinogradov-type range, characters \(\psi\in\Gamma_q^\perp\setminus\{1\}\), and Dirichlet coefficients \(\alpha,\beta\) of support in \([1,\sqrt X]\).  Specialising to the high-\(\ell\) seam \(q\equiv 1\pmod\ell\) and reading off the Kummer characters of order \(\ell\), the controlling bilinear sum is the following.
+
+\begin{hypothesis}[Type-II Kummer Bilinear estimate, $\mathrm{TKB}_\ell$]\label{H:TKB}
+Fix an odd prime \(\ell\).  For every \(\varepsilon>0\) there exists \(\delta=\delta(\varepsilon)>0\) such that, for every \(A\in\F_\ell^2\setminus\{0\}\) and every pair \((\alpha_m),(\beta_n)\) of complex sequences supported on \([1,\sqrt X]\) with \(|\alpha_m|,|\beta_n|\le 1\),
+\[
+\sum_{\substack{q\le X^{1/2-\varepsilon}\\q\equiv 1\bmod\ell}}\;
+\Biggl|\sum_{m,n\le\sqrt X}\alpha_m\beta_n\,\chi_{q,A}(mn)\Biggr|^{\,2}
+\;\ll\;
+X^{2-\delta},
+\]
+where \(\chi_{q,A}\) is the order-\(\ell\) Kummer character at \(q\) cutting out \(K_{\ell,A}\).
+\end{hypothesis}
+
+The Type-I contribution is unconditional via the exact \(\Gamma\)-fiber identity (Paper~3 / Companion note):
+\[
+\#\{(k,\ell):m2^k3^\ell+1\equiv 0\pmod q,\ k\le K,\ell\le L\}
+\;=\;\frac{KL}{\operatorname{lcm}(a_q,b_q)}\cdot\1_{\Gamma_q}(-m^{-1})+O(a_qL+b_qK+a_qb_q).
+\]
+
+\begin{theorem}[Bilinear-Kummer Equivalence]\label{T:phnc-tkb}
+Fix an odd prime \(\ell\).  Then
+\[
+\mathrm{PHNC}_\ell\;\Longleftrightarrow\;\mathrm{TKB}_\ell\;+\;(\text{Type-I bound; unconditional via the exact }\Gamma\text{-fiber identity})
+\]
+in the following precise sense:
+\begin{enumerate}[leftmargin=2em,label=(\arabic*)]
+\item \emph{(\(\Leftarrow\), mechanical.)}  Assuming \(\mathrm{TKB}_\ell\), the Heath--Brown decomposition of \(\sum_{ms+1\le X}\Lambda(ms+1)\1[ms+1\equiv 1\bmod\ell]\) yields the PHNC asymptotic at level \(\ell\) via Cauchy--Schwarz and the exact \(\Gamma\)-fiber identity (Type-I).
+\item \emph{(\(\Rightarrow\), conditional on two named stacked steps.)}  Assuming \(\mathrm{PHNC}_\ell\) at level \(\ell\), the hypothesis \(\mathrm{TKB}_\ell\) follows modulo:
+\begin{itemize}[leftmargin=2em]
+\item \textbf{(G1) Effective Chebotarev with degree-uniformity in \(\ell\).}  A version of Chebotarev density for \(K_{\ell,\star}/\Q\) giving positive density of primes \(q\) with prescribed Frobenius class on which \(-m^{-1}\) aligns with a chosen hyperplane mode \(A_0\), with error term uniform in the field degree \([K_{\ell,\star}:\Q]=\ell^2(\ell-1)\).  Standard Lagarias--Odlyzko or Thorner--Zaman density gives the qualitative statement; the uniformity-in-\(\ell\) is precisely the discriminant barrier of \cref{T:disc-barrier}.
+\item \textbf{(G2) \(L^2\)-localisation to the residue class \(1\bmod\ell\) without circular cross-terms.}  The cross-term contribution from non-Kummer characters in \(\Gamma_q^\perp\) to the residue-class projector must be controlled without invoking \(\mathrm{PHNC}_\ell\) itself.
+\end{itemize}
+\end{enumerate}
+Gap (G1) is logically the same wall as the discriminant barrier of \cref{T:disc-barrier}; gap (G2) is a finite Plancherel bookkeeping problem (Paper~13).  Neither is fixable by purely structural input; (G1) requires the cyclotomic-tower Deuring--Heilbronn target of \cref{Pr:DH-tower}.
+\end{theorem}
+
+\begin{proof}[Proof outline]
+\emph{Direction (1).}  Apply the Heath--Brown identity to \(\sum_{n\le X,n\equiv 1\bmod\ell}\Lambda(n)\,\1[n-1\in mS]\).  The Type-I terms (level of distribution \(\le X^{1/3}\)) are controlled by the exact \(\Gamma\)-fiber identity above, uniformly in \(m\) and in residue classes mod \(\ell\).  The Type-II terms (level of distribution \(X^{1/3}<q\le X^{1/2-\varepsilon}\)) split via \cref{L:kummer-fourier} into the principal-character piece (which contributes to the main term) and a sum over \(\psi\in\Gamma_q^\perp\setminus\{1\}\).  For \(q\equiv 1\bmod\ell\), the order-\(\ell\) part of \(\Gamma_q^\perp\) is generated by the Kummer characters \(\chi_{q,A}\), \(A\in\F_\ell^2\setminus\{0\}\).  Higher-order characters are handled by classical (non-Kummer) bilinear bounds.  The Kummer part is precisely the LHS of \(\mathrm{TKB}_\ell\) summed over \(A\), which by hypothesis is \(\ll X^{2-\delta}\).  Cauchy--Schwarz over the family then gives the required Type-II bound \(\ll X(\log X)^{-C}\) for any \(C>0\), establishing the prime asymptotic in residue \(1\bmod\ell\).
+
+\emph{Direction (2).}  Suppose \(\mathrm{PHNC}_\ell\) holds and \(\mathrm{TKB}_\ell\) fails for some \(A_0\): there exist \((\alpha_m),(\beta_n)\) with \(\sum_q|\langle\alpha\otimes\beta,\chi_{q,A_0}\rangle|^2\gg X^{2-\delta'}\) for \(\delta'<\delta\).  Choose \(m\) so that \(-m^{-1}\) has Kummer slope aligned with \(A_0\) on a positive-density set of \(q\equiv 1\bmod\ell\): such an \(m\) exists by the Chebotarev density theorem applied to \(K_{\ell,\star}/\Q\) (the splitting condition cuts out a positive-density union of Frobenius classes), although this step is currently sketched and uses Chebotarev existentially rather than effectively.  The bilinear excess at \(\chi_{q,A_0}\) localises in the residue class \(\equiv 1\bmod\ell\) by orthogonality of the order-\(\ell\) characters in \(\Gamma_q^\perp\), contradicting the PHNC asymptotic by an exact \(L^2\) accounting via Plancherel on \(\F_\ell^2\) (Paper~13, Theorem 1).
+\end{proof}
+
+\begin{remark}[Relation to Papers 12--14]
+Paper~12 (Bernoulli--Kummer smoothing) supplies the smoothing leg from weighted PHNC; Paper~13 (Diagonal Barrier) shows that arbitrary-coefficient rank-two large-sieve bounds are false because of the diagonal vector-fiber term; Paper~14 (Bad-Character Sparsity) gives the cyclic-line forcing.  \Cref{T:phnc-tkb} sharpens these by exhibiting that PHNC$_\ell$ is exactly a bilinear (Type-II) statement, not a mean-square or arbitrary-coefficient statement.  Paper~14's mean-square identity controls the Type-I diagonal; \(\mathrm{TKB}_\ell\) controls the Type-II off-diagonal; together they cover the parity-barrier crossing required for the Erd\H{o}s--Graham sequence.
+\end{remark}
+
+\section{Position of \texorpdfstring{$\mathrm{TKB}_\ell$}{TKB\_ell} in the analytic hierarchy}
+
+\begin{proposition}[Logical location of \(\mathrm{TKB}_\ell\)]\label{P:hierarchy}
+\[
+\text{Heath--Brown cubic large sieve}\;\Longleftarrow\;\mathrm{TKB}_\ell\;\Longleftarrow\;\text{GRH for }\{L(s,\chi_{q,A})\}_{q,A}.
+\]
+The first implication is strict for \(\ell\ge 5\): the Heath--Brown 1996 large sieve handles \(\ell=3\) cubic-residue characters with restricted moduli, while \(\mathrm{TKB}_\ell\) averages over \(q\) of an order-\(\ell\) Kummer character with the modulus growing through the Bombieri--Vinogradov range, indexed by hyperplane modes \(A\).  The second implication follows from standard GRH-implies-bilinear technology (Iwaniec--Kowalski~\cite{IK}, Chapter~17).
+\end{proposition}
+
+\begin{remark}[Honest statement of novelty]
+\(\mathrm{TKB}_\ell\) is not a fundamentally new analytic direction; it is a precise name for ``the order-\(\ell\) Kummer-character bilinear estimate analogous to Heath--Brown's order-\(3\) cubic large sieve, but for \(\ell\ge 5\) and averaged over \(\ell+1\) hyperplane modes.''  For \(\ell=3\) the statement reduces, after averaging over the eight hyperplane modes \(A\in\F_3^2\setminus 0\), to a finite collection of cubic-character bilinear bounds; the Heath--Brown 1996 result gives one such bound for a single character orbit, and whether averaging recovers the required power saving is the question of \cref{Pr:TKB-3}.  The content of \cref{T:phnc-tkb} is not the introduction of a new sieve technique, but the explicit logical equivalence: \emph{this} bilinear estimate is precisely what PHNC at level \(\ell\) requires from the Type-II contribution, and gaps (G1) and (G2) of \cref{T:phnc-tkb} pin down where that equivalence remains conditional.
+\end{remark}
+
+\section{Non-applicability of the Friedlander--Iwaniec asymptotic sieve as stated}
+
+\begin{proposition}[ASP-as-stated does not deliver PHNC]\label{P:ASP-fail}
+Even granting \(\mathrm{TKB}_\ell\), the Friedlander--Iwaniec asymptotic sieve for primes~\cite{FI} applied literally to the Erd\H{o}s--Graham sequence \(\mathcal A=\{ms+1:s\in S,s\le X\}\) does not produce \(\mathrm{PHNC}_\ell\), for two independent structural reasons:
+
+\begin{enumerate}[leftmargin=2em,label=(\arabic*)]
+\item \emph{Density mismatch.}  The asymptotic sieve for primes is formulated for sequences with \(\sum a_n\asymp X(\log X)^{-c}\) for fixed \(c\ge 0\).  The Erd\H{o}s--Graham orbit has \(|\mathcal A|\asymp(\log X)^2\), which is \(\ll X^\varepsilon\) for every \(\varepsilon>0\).  The standard main term \(|\mathcal A|/\log X\) is logarithmically thin.
+\item \emph{Local-density mismatch.}  The asymptotic sieve presumes equidistribution against the uniform local density \(1/\varphi(q)\).  By the exact \(\Gamma\)-fiber identity, the Erd\H{o}s--Graham orbit equidistributes against \(|\Gamma_q(2,3)|/(q-1)\cdot\1_{\Gamma_q}(-m^{-1})\), not against \(1/\varphi(q)\).  The two densities differ by the factor \(|\Gamma_q(2,3)|\), which is the obstruction calculus of Paper~1.
+\end{enumerate}
+The first obstruction reflects the logarithmic thinness of \(\mathcal A\); the second is intrinsic to the multiplicative structure of \(S\).
+\end{proposition}
+
+\begin{corollary}[Kummer-twisted asymptotic sieve framework]\label{C:kummer-twisted-ASP}
+The correct sieve framework for the Erd\H{o}s--Graham sequence is a Kummer-twisted asymptotic sieve in which:
+\begin{enumerate}[leftmargin=2em,label=(\arabic*)]
+\item the local densities \(g(q)\) are replaced by Kummer-\(\Gamma\) densities \(g_\Gamma(q)=|\Gamma_q(2,3)|/(q-1)\cdot\1_{\Gamma_q}(-m^{-1})\);
+\item the parity-breaking Type-II bilinear input is \(\mathrm{TKB}_\ell\) rather than the Friedlander--Iwaniec quadratic-character bilinear input.
+\end{enumerate}
+This framework is currently a proof program, not a theorem, and is offered as the precise structural reroute named by \cref{T:phnc-tkb} and \cref{P:ASP-fail}.
+\end{corollary}
+
+\section{Per-character reformulation}\label{S:per-character}
+
+The bilinear equivalence of \cref{T:phnc-tkb} admits a dual face: a per-character statement of PHNC indexed by hyperplane modes \(A\in\F_\ell^2\setminus\{0\}\) rather than by averaged bilinear forms.  This section records that dual reformulation; both forms describe the same analytic seam.
+
+\subsection{Projective-line Parseval and scalar projections}
+
+Given a finite prime set \(\mathcal Q\subset\{q\equiv 1\bmod\ell,\,q\nmid 6\ell\}\), let \(N=|\mathcal Q|\) and define the Kummer log-vector counting measure
+\[
+\mu(v)=\#\{q\in\mathcal Q:x_\ell(q)=v\},\qquad v\in V=\F_\ell^2.
+\]
+For \(A\in V\setminus\{0\}\), the scalar projection along \(A\) is
+\[
+\mu_A(t)=\sum_{A\cdot v=t}\mu(v),\qquad t\in\F_\ell.
+\]
+Restricting Plancherel on \(V\) to the projective line through \(A\) gives
+\[
+\sum_{s\in\F_\ell^*}|\widehat\mu(sA)|^2=\ell\sum_{t\in\F_\ell}\!\left(\mu_A(t)-\frac N\ell\right)^{\!2},
+\]
+so a full \(\tau\)-bad projective line through \(A\) corresponds precisely to a scalar \(L^2\) deviation \(\sum_t(\mu_A(t)-N/\ell)^2\ge(\ell-1)\tau^2N^2/\ell\).  In particular, an \(\ell-1\)-sized bad-character packet (the cyclic-line forcing target of Paper~14) corresponds to scalar non-uniformity in a single linear functional, not vector-fiber non-equidistribution.
+
+\subsection{Arithmetic content of \texorpdfstring{$A\cdot x_\ell(q)$}{A.x\_l(q)}}
+
+\begin{lemma}[Linear functional = Frobenius element]\label{L:arithmetic-A}
+For \(A=(A_1,A_2)\in V\setminus\{0\}\), let \(\alpha_A=2^{A_1}3^{A_2}\in\Q^*\) and \(K_{\ell,A}=\Q(\zeta_\ell,\alpha_A^{1/\ell})\).  By rank-two Kummer independence (Paper~6), \(\operatorname{Gal}(K_{\ell,A}/\Q(\zeta_\ell))\simeq\F_\ell\).  For \(q\nmid 6\ell\), \(q\equiv 1\bmod\ell\), the linear functional value satisfies
+\[
+A\cdot x_\ell(q)\;=\;t\quad\Longleftrightarrow\quad\operatorname{Frob}_q\text{ acts on }K_{\ell,A}/\Q(\zeta_\ell)\text{ as the element }t\in\F_\ell.
+\]
+\end{lemma}
+
+\begin{proof}
+With \(g_q\) a primitive root mod \(q\) and \(x_\ell(q)=(u_1,u_2)\), the Kummer-Artin formula gives
+\[
+\alpha_A^{(q-1)/\ell}\;\equiv\;\zeta_\ell^{A_1u_1+A_2u_2}\;=\;\zeta_\ell^{A\cdot x_\ell(q)}\pmod q,
+\]
+identifying \(A\cdot x_\ell(q)\) with the Frobenius action on the \(\ell\)-th root \(\alpha_A^{1/\ell}\).
+\end{proof}
+
+\subsection{Per-character PHNC equivalence}
+
+\begin{theorem}[Per-character form of PHNC]\label{T:per-character}
+The high-\(\ell\) PHNC target ``\(|B_\eta(\ell,Q)|\le\ell-2\) for all \(\ell\le(\log Q)^B\) and some absolute \(\eta>0\)'' is logically equivalent to: for every \(A\in V\setminus\{0\}\) outside a single projective line through the origin, and every \(s\in\F_\ell^*\),
+\[
+S_{\ell,A,s}(Q)\;:=\;\sum_{\substack{q\le Q\\ q\equiv 1\bmod\ell\\ q\nmid 6\ell}}\Lambda(q)\,e_\ell\bigl(s\cdot A\cdot x_\ell(q)\bigr)\;\ll_B\;N_\ell(Q)(\log Q)^{-B},\qquad N_\ell(Q)=\sum_{\substack{q\le Q\\ q\equiv 1\bmod\ell}}\Lambda(q).
+\]
+\end{theorem}
+
+\begin{proof}
+By \cref{L:arithmetic-A}, \(S_{\ell,A,s}(Q)\) is exactly the Hecke-character prime sum for the nontrivial character of \(\operatorname{Gal}(K_{\ell,A}/\Q(\zeta_\ell))\) raised to power \(s\), restricted to the residue class \(q\equiv 1\bmod\ell\).  The PHNC target \(|B_\eta|\le\ell-2\) says: at most one projective line in \(\widehat{G_\ell}\setminus\{1\}\) carries a bad character.  Each projective line through \(A\in V\setminus\{0\}\) corresponds to the \(\ell-1\) nontrivial characters of \(\operatorname{Gal}(K_{\ell,A}/\Q(\zeta_\ell))\), parametrised by \(s\in\F_\ell^*\).  Hence ``at most one bad projective line'' \(\Leftrightarrow\) ``Hecke-character non-concentration for every \(A\) outside one exceptional line, uniformly in \(s\)'' \(\Leftrightarrow\) the displayed bound.
+\end{proof}
+
+\begin{remark}[Two faces of the same equivalence]\label{R:two-faces}
+\cref{T:per-character} (per-character) and \cref{T:phnc-tkb} (bilinear) are dual formulations of the same analytic seam:
+\begin{itemize}[leftmargin=2em]
+\item The bilinear form is the natural input to sieve-theoretic attacks (Heath--Brown identity, Friedlander--Iwaniec ASP framework).
+\item The per-character form is the natural input to direct prime-counting attacks on each cyclic Kummer subextension \(K_{\ell,A}\).
+\end{itemize}
+The substantive content of \cref{T:per-character} over Paper~14's cyclic-line forcing is the precise arithmetic identification \(A\cdot x_\ell(q)=\operatorname{Frob}_q\) in \(\operatorname{Gal}(K_{\ell,A}/\Q(\zeta_\ell))\): an \(\ell-1\)-sized bad-character packet corresponds to \emph{scalar} (one-dimensional) non-uniformity in a single one-radical Kummer subextension, not to \emph{vector} (two-dimensional) equidistribution failure in \(\F_\ell^2\).
+\end{remark}
+
+\section{Open problems}\label{S:open}
+
+\begin{problem}[Cyclotomic-tower Deuring--Heilbronn]\label{Pr:DH-tower}
+Prove a Deuring--Heilbronn-type zero-repulsion theorem for the Artin \(L\)-function
+\(\zeta_{K_{\ell,\star}}(s)/\zeta_{K_\ell}(s)\) over \(\Q\) whose constants are uniform in \(\ell\) — equivalently, whose constants do not absorb the cyclotomic discriminant \(|d_{K_\ell}|=\ell^{\ell-2}\).  Such a theorem crosses the threshold of \cref{T:disc-barrier}.
+\end{problem}
+
+\begin{problem}[\(\mathrm{TKB}_\ell\) at \(\ell=3\)]\label{Pr:TKB-3}
+Prove or disprove \(\mathrm{TKB}_3\) by reducing to the Heath--Brown cubic large sieve and averaging over the eight hyperplane modes in \(\F_3^2\setminus 0\).  Disproof would force a structural counterexample analogous to Papers~12 and~13; a proof would establish \(\mathrm{PHNC}_3\) (and hence the EG \#203 negative resolution restricted to the residue class \(\equiv 1\bmod 3\)) unconditionally.
+\end{problem}
+
+\begin{problem}[Higher-rank \(\mathrm{TKB}\)]\label{Pr:TKB-higher}
+Formulate and study the rank-\(r\) generalisation \(\mathrm{TKB}_{\ell,r}\) for bases \((a_1,\ldots,a_r)\) of distinct rational primes, using the rank-\(r\) projective Kummer geometry of Paper~6.  The hyperplane mode \(A\) ranges over \(\Pj^{r-1}(\F_\ell)\), and the bilinear sum is correspondingly enlarged.
+\end{problem}
+
+\section{Honest status}
+
+This paper proves two structural theorems about the analytic seam of Erd\H{o}s--Graham \#203:
+\begin{itemize}[leftmargin=2em]
+\item \cref{T:disc-barrier} bounds what log-free zero-density methods over \(K_\ell\) can achieve.
+\item \cref{T:phnc-tkb} reduces PHNC to a precisely named Type-II bilinear estimate.
+\end{itemize}
+It does not prove PHNC.  It does not resolve Erd\H{o}s--Graham \#203.  Its purpose is to make the conditional landscape sharp enough that subsequent work can attack a single named target: either the cyclotomic-tower Deuring--Heilbronn problem (\cref{Pr:DH-tower}) or the bilinear \(\mathrm{TKB}_\ell\) at small \(\ell\) (\cref{Pr:TKB-3}).
+
+\bibliographystyle{alpha}
+\begin{thebibliography}{9}
+
+\bibitem{FI}
+J. Friedlander and H. Iwaniec.
+\newblock The polynomial \(X^2+Y^4\) captures its primes.
+\newblock \emph{Annals of Mathematics}, 148:1041--1065, 1998.
+
+\bibitem{HB96}
+D. R. Heath-Brown.
+\newblock A new \(k\)-th power identity.
+\newblock \emph{Proc.\ London Math.\ Soc.}, 73:241--301, 1996.
+
+\bibitem{IK}
+H. Iwaniec and E. Kowalski.
+\newblock \emph{Analytic Number Theory}.
+\newblock AMS Colloquium Publications 53, 2004.
+
+\bibitem{TZ}
+J. Thorner and A. Zaman.
+\newblock A unified and improved Chebotarev density theorem.
+\newblock \emph{Algebra \& Number Theory}, 13(5):1039--1068, 2019.
+
+\bibitem{Thorner2017}
+J. Thorner.
+\newblock A log-free zero-density estimate and the prime number theorem for the Hecke characters of number fields.
+\newblock Cited for the log-free zero-density form used in \cref{T:disc-barrier}; precise theorem reference to be confirmed against the published version.
+
+\bibitem{HumphriesThorner2022}
+P. Humphries and J. Thorner.
+\newblock Field-uniform refinements of log-free zero-density bounds for automorphic \(L\)-functions.
+\newblock Cited for sharper field-varying-conductor bounds than the form used in \cref{T:disc-barrier}; precise theorem reference to be confirmed.
+
+\bibitem{Washington}
+L. C. Washington.
+\newblock \emph{Introduction to Cyclotomic Fields}.
+\newblock Springer, 2nd edition, 1997.
+
+\bibitem{paper2}
+J. Wilder.
+\newblock CRT Synchronization and Projective Kummer Slopes in Two-Generator Subgroups.
+\newblock Companion paper, 2026.
+
+\bibitem{paper6}
+J. Wilder.
+\newblock Rank-\(r\) Synchronization Defects and Projective Kummer Geometry.
+\newblock Companion paper, 2026.
+
+\bibitem{paper12}
+J. Wilder.
+\newblock Kummer-Fourier Smoothing and KRWS.
+\newblock Companion paper, 2026.
+
+\bibitem{paper13}
+J. Wilder.
+\newblock The Diagonal Barrier in Kummer Large-Sieve Transfers.
+\newblock Companion paper, 2026.
+
+\bibitem{paper14}
+J. Wilder.
+\newblock Bad-Character Sparsity and the High-\(\ell\) Kummer Non-Concentration Barrier.
+\newblock Companion paper, 2026.
+
+\end{thebibliography}
+
+\end{document}

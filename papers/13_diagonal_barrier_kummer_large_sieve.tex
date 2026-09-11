@@ -1,0 +1,228 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{warning}{Warning}
+
+\newcommand{\F}{\mathbb F}
+
+\title{The Diagonal Barrier in Kummer Large-Sieve Transfers}
+\author{Jared Wilder}
+\date{2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper 4 formulated a rank-two Hecke large-sieve bridge for arbitrary coefficient weights on Kummer vectors.  This note proves that such a bridge is false as stated.  The finite vector space \(\F_\ell^2\) imposes an exact Plancherel identity with an unavoidable diagonal and fiber-sum term.  A single localized coefficient already contributes \(\ell^2-1\), contradicting any bound of size \(\ell^2(\log Q)^{-A}\) for arbitrary unit \(L^2\) weights.  The correct finite object is the vector-fiber variance, not a universal arbitrary-coefficient large sieve.  Projective slope collision control does not imply vector-fiber control.  The Bernoulli-Kummer smoothing theorem supplies a distributional version for the obstruction law, but Kummer-BV/BVK still require a separate sieve-transfer estimate for the actual von Mangoldt or sieve weights.
+\end{abstract}
+
+\section{Setup}
+
+Let
+\[
+G=\F_\ell^2.
+\]
+For each prime \(q\in\mathcal Q\), let
+\[
+x_q=(\log_q2,\log_q3)\in G.
+\]
+For complex weights \(\omega_q\), define the Fourier sums
+\[
+S_A(\omega)=\sum_{q\in\mathcal Q}\omega_q e_\ell(A\cdot x_q),
+\qquad A\in G,
+\]
+and the vector-fiber sums
+\[
+\Omega(v)=\sum_{q:x_q=v}\omega_q,
+\qquad v\in G.
+\]
+
+\section{Exact identity}
+
+\begin{theorem}[Exact Kummer large-sieve identity]\label{T:exact}
+For arbitrary complex weights \(\omega_q\),
+\[
+\sum_{A\ne0}|S_A(\omega)|^2
+=
+\ell^2\sum_{v\in G}|\Omega(v)|^2
+-
+\left|\sum_{q\in\mathcal Q}\omega_q\right|^2.
+\]
+\end{theorem}
+
+\begin{proof}
+Since \(S_A(\omega)=\sum_{v\in G}\Omega(v)e_\ell(A\cdot v)\), Plancherel on \(G\) gives
+\[
+\sum_{A\in G}|S_A(\omega)|^2
+=
+\ell^2\sum_{v\in G}|\Omega(v)|^2.
+\]
+The \(A=0\) term is
+\[
+|S_0(\omega)|^2
+=
+\left|\sum_q\omega_q\right|^2.
+\]
+Subtracting it proves the identity.
+\end{proof}
+
+\begin{corollary}[Diagonal counterexample]\label{C:single}
+The bound
+\[
+\sum_{A\ne0}|S_A(\omega)|^2
+\ll_A
+\ell^2(\log Q)^{-A}
+\]
+cannot hold for all weights satisfying \(\sum_q|\omega_q|^2\le1\).
+\end{corollary}
+
+\begin{proof}
+Choose one prime \(q_0\) and set \(\omega_{q_0}=1\), \(\omega_q=0\) for \(q\ne q_0\).  Then
+\[
+|S_A(\omega)|^2=1
+\qquad(A\ne0),
+\]
+so
+\[
+\sum_{A\ne0}|S_A(\omega)|^2=\ell^2-1.
+\]
+For fixed \(\ell\), the proposed right-hand side tends to \(0\) relative to \(\ell^2\) as \(Q\to\infty\).  In the high-\(\ell\) range it is still smaller by an arbitrary logarithmic power.  The stated arbitrary-coefficient saving is therefore false.
+\end{proof}
+
+\begin{corollary}[Fiber multiplicity barrier]\label{C:fiber}
+If \(M\) indices \(q\) share the same vector \(x_q=v_0\), and \(\omega_q=M^{-1/2}\) on those indices and \(0\) elsewhere, then \(\sum_q|\omega_q|^2=1\) but
+\[
+\sum_{A\ne0}|S_A(\omega)|^2
+=
+M(\ell^2-1).
+\]
+Thus the operator norm is controlled by vector-fiber multiplicity, not only by the ambient dimension.
+\end{corollary}
+
+\begin{proof}
+Here \(\Omega(v_0)=M^{1/2}\), all other fibers vanish, and \(\sum_q\omega_q=M^{1/2}\).  Substitution into \cref{T:exact} gives
+\[
+\ell^2M-M=M(\ell^2-1).
+\]
+\end{proof}
+
+\section{Distributional version}
+
+The identity becomes useful when the weights define a probability distribution rather than arbitrary localized coefficients.
+
+\begin{proposition}[Probability-weight Plancherel]\label{P:prob}
+Let
+\[
+\mu=\sum_{q\in\mathcal Q}a_q\delta_{x_q},
+\qquad a_q\ge0,\qquad \sum_q a_q=1.
+\]
+Then
+\[
+\sum_{A\ne0}|\widehat\mu(A)|^2
+=
+\ell^2\|\mu-u\|_2^2,
+\]
+where \(u\) is uniform on \(G\).
+\end{proposition}
+
+\begin{proof}
+Apply \cref{T:exact} with \(\omega_q=a_q\).  The fiber sums are the probabilities \(\mu(v)\), and the \(A=0\) term is \(1\).  Since
+\[
+\|\mu-u\|_2^2
+=
+\sum_v\mu(v)^2-\ell^{-2},
+\]
+we get
+\[
+\ell^2\sum_v\mu(v)^2-1
+=
+\ell^2\|\mu-u\|_2^2.
+\]
+\end{proof}
+
+\begin{corollary}[Bernoulli-Kummer distributional large sieve]\label{C:bernoulli}
+Let \(\nu\) be the Bernoulli-Kummer obstruction law from Paper 12.  If
+\[
+W_\ell(\mathcal Q)=\min_{A\ne0}\sum_{q:A\cdot x_q\ne0}p_q(1-p_q),
+\]
+then
+\[
+\sum_{A\ne0}|\widehat\nu(A)|^2
+\le
+(\ell^2-1)
+\exp\left(-\frac{16}{\ell^2}W_\ell(\mathcal Q)\right).
+\]
+In particular, if \(16W_\ell(\mathcal Q)/\ell^2\ge A\log\log Q+O(\log\ell)\), then
+\[
+\sum_{A\ne0}|\widehat\nu(A)|^2
+\ll_A(\log Q)^{-A}.
+\]
+\end{corollary}
+
+\begin{proof}
+Paper 12 proves
+\[
+\|\nu-u\|_2^2
+\le
+(1-\ell^{-2})
+\exp\left(-\frac{16}{\ell^2}W_\ell(\mathcal Q)\right).
+\]
+Multiply by \(\ell^2\) and use \cref{P:prob}.
+\end{proof}
+
+\section{Projective slope control is not vector-fiber control}
+
+The projective Kummer collision graph records the class
+\[
+\sigma_\ell(q)=[x_q]\in\mathbb P^1(\F_\ell)
+\]
+when \(x_q\ne0\).  This forgets the radial scalar in \(x_q\).  Additive characters \(e_\ell(A\cdot x_q)\), however, see the full vector.
+
+\begin{proposition}[Projective-to-vector gap]\label{P:projective-gap}
+Small projective slope collision does not imply small vector-fiber variance for arbitrary coefficients.
+\end{proposition}
+
+\begin{proof}
+Choose one nonzero vector on each projective line in \(\F_\ell^2\), and put equal probability mass on these \(\ell+1\) representatives.  The projective slope distribution is perfectly uniform.  But the vector distribution has support size only \(\ell+1\), so
+\[
+\|\mu-u\|_2^2
+=
+\frac1{\ell+1}-\frac1{\ell^2},
+\]
+which is much larger than a logarithmic power saving target in the high-\(\ell\) range.  By \cref{P:prob}, the corresponding nontrivial character energy is
+\[
+\ell^2\left(\frac1{\ell+1}-\frac1{\ell^2}\right)
+\asymp \ell.
+\]
+Thus slope equidistribution alone does not give vector Fourier saving.  Arbitrary coefficients localized on a single vector fiber give the stronger obstruction in \cref{C:single,C:fiber}.
+\end{proof}
+
+\section{Corrected sieve-transfer status}
+
+The finite correction is:
+
+\begin{itemize}[leftmargin=2em]
+\item There is no arbitrary-coefficient Kummer large-sieve saving of size \(\ell^2(\log Q)^{-A}\) under only \(\sum|\omega_q|^2\le1\).
+\item The exact finite quantity is the vector-fiber energy \(\sum_v|\Omega(v)|^2\).
+\item Projective KRC is a slope-statistic; it does not control radial vector fibers.
+\item Bernoulli-Kummer smoothing supplies a distributional large-sieve statement for the obstruction probability law.
+\item Kummer-BV and BVK still require a separate analytic transfer statement for the actual von Mangoldt or sieve weights.  That transfer must control vector-fiber sums for those weights, or state an equivalent Fourier variance estimate directly.
+\end{itemize}
+
+\begin{warning}[What this does not prove]
+This note does not prove Kummer-BV, BVK, or Erd\H{o}s--Graham \#203.  It proves that one proposed arbitrary-coefficient bridge is false and replaces it with the exact finite identity that any valid sieve-transfer theorem must satisfy.
+\end{warning}
+
+\end{document}

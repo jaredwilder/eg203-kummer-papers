@@ -1,0 +1,528 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{problem}{Problem}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Pj}{\mathbb P}
+\newcommand{\G}{\Gamma}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\coker}{\operatorname{coker}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\Span}{\operatorname{Span}}
+
+\title{Rank-\(r\) Synchronization Defects and Projective Kummer Geometry}
+\author{Jared Wilder}
+\date{Oracle strengthening addendum --- 2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note extends the two-generator CRT synchronization and projective Kummer-slope calculus to arbitrary rank \(r\).  For bases \(a_1,\ldots,a_r\), squarefree moduli \(d=\prod_i q_i\), and local discrete-log rows
+\[
+u_i=(u_{i1},\ldots,u_{ir})\in(\Z/(q_i-1)\Z)^r,
+\]
+global membership in \(\langle a_1,\ldots,a_r\rangle\bmod d\) is exactly membership of the target log vector in the image of a single exponent lattice map.  The resulting synchronization defect quotient has an exact size formula.  At a prime \(\ell\), the first-level defect is the cokernel of a Kummer log matrix over \(\F_\ell\).  For two primes the rank defect is equality of projective Kummer points in \(\Pj^{r-1}(\F_\ell)\), outside star rows.  Hyperplane events are controlled by one-radical Kummer fields, and the star atom is controlled by the full rank-\(r\) Kummer field.  The proofs are finite algebra plus elementary Kummer independence by valuations.
+\end{abstract}
+
+\section{Rank-\(r\) CRT synchronization}
+
+Let \(a_1,\ldots,a_r\in\Z\setminus\{0\}\).  Let \(d=q_1\cdots q_s\) be squarefree with \((d,a_1\cdots a_r)=1\).  Put
+\[
+G_d=(\Z/d\Z)^*,
+\qquad
+\Gamma_d(\mathbf a)=\langle a_1,\ldots,a_r\rangle\subset G_d.
+\]
+For each \(i\), choose a primitive root \(g_i\bmod q_i\), and write
+\[
+a_j\equiv g_i^{u_{ij}}\pmod{q_i},
+\qquad
+c\equiv g_i^{w_i}\pmod{q_i}.
+\]
+Define the exponent-lattice map
+\[
+\Phi_d:\Z^r\longrightarrow \bigoplus_{i=1}^s \Z/(q_i-1)\Z,
+\qquad
+(n_1,\ldots,n_r)\longmapsto
+\left(\sum_{j=1}^r n_j u_{ij}\right)_{i=1}^s .
+\]
+
+\begin{theorem}[Rank-\(r\) squarefree lattice membership]\label{T:rankr-membership}
+With notation above,
+\[
+c\in\Gamma_d(\mathbf a)
+\]
+if and only if
+\[
+(w_1,\ldots,w_s)\in \im(\Phi_d).
+\]
+\end{theorem}
+
+\begin{proof}
+By the Chinese remainder theorem,
+\[
+G_d\simeq\prod_{i=1}^s\F_{q_i}^*.
+\]
+For an exponent vector \(n=(n_1,\ldots,n_r)\), the image of
+\[
+a_1^{n_1}\cdots a_r^{n_r}
+\]
+in the \(i\)-th component is
+\[
+g_i^{\sum_j n_j u_{ij}}.
+\]
+Thus a single global exponent vector \(n\) sends \(\mathbf a^n\) to \(c\) modulo every \(q_i\) exactly when
+\[
+\sum_j n_j u_{ij}\equiv w_i\pmod{q_i-1}
+\]
+for all \(i\).  This is precisely the condition that the log vector \((w_i)_i\) belongs to the image of \(\Phi_d\).
+\end{proof}
+
+\begin{definition}[Rank-\(r\) synchronization defect]\label{D:rankr-defect}
+Let
+\[
+\Gamma_{q_i}(\mathbf a)=\langle a_1,\ldots,a_r\rangle\subset\F_{q_i}^*,
+\qquad
+\Pi_d(\mathbf a)=\prod_{i=1}^s \Gamma_{q_i}(\mathbf a).
+\]
+The rank-\(r\) synchronization defect quotient is
+\[
+\mathcal S_d(\mathbf a)=\Pi_d(\mathbf a)/\Gamma_d(\mathbf a),
+\]
+where \(\Gamma_d(\mathbf a)\) is embedded diagonally through CRT.
+\end{definition}
+
+\begin{proposition}[Exact subgroup-size formula]\label{P:size-defect}
+For squarefree \(d=\prod_i q_i\),
+\[
+|\Gamma_d(\mathbf a)|
+=
+\frac{\prod_{i=1}^s|\Gamma_{q_i}(\mathbf a)|}{|\mathcal S_d(\mathbf a)|}.
+\]
+\end{proposition}
+
+\begin{proof}
+Under CRT, \(\Gamma_d(\mathbf a)\) is a subgroup of
+\[
+\Pi_d(\mathbf a)=\prod_i\Gamma_{q_i}(\mathbf a).
+\]
+By definition,
+\[
+|\mathcal S_d(\mathbf a)|=[\Pi_d(\mathbf a):\Gamma_d(\mathbf a)].
+\]
+Therefore
+\[
+|\Pi_d(\mathbf a)|=|\Gamma_d(\mathbf a)|\,|\mathcal S_d(\mathbf a)|.
+\]
+Since \(|\Pi_d(\mathbf a)|=\prod_i|\Gamma_{q_i}(\mathbf a)|\), the formula follows.
+\end{proof}
+
+\section{First-level \(\ell\)-defect spaces}
+
+Let \(\ell\) be prime and let \(T\) be a finite set of primes \(q\equiv1\pmod\ell\), \(q\nmid a_1\cdots a_r\).  For each \(q\in T\), choose a primitive root \(g_q\bmod q\) and define
+\[
+x_\ell(q)=(u_{q1},\ldots,u_{qr})\in\F_\ell^r,
+\qquad
+a_j\equiv g_q^{u_{qj}}\pmod q.
+\]
+Define the Kummer log matrix
+\[
+M_\ell(T;\mathbf a)
+=
+\begin{pmatrix}
+x_\ell(q_1)\\
+\vdots\\
+x_\ell(q_s)
+\end{pmatrix}
+\in M_{s\times r}(\F_\ell).
+\]
+Equivalently, define
+\[
+\phi_{\ell,T}:\F_\ell^r\to\F_\ell^T,
+\qquad
+n\mapsto \big(x_\ell(q)\cdot n\big)_{q\in T}.
+\]
+
+\begin{definition}[First-level \(\ell\)-synchronization defect space]\label{D:first-level}
+The first-level \(\ell\)-defect space is
+\[
+D_\ell(T;\mathbf a)=\coker(\phi_{\ell,T}).
+\]
+Its defect dimension is
+\[
+\delta_\ell(T;\mathbf a)=\dim_{\F_\ell}D_\ell(T;\mathbf a)
+=
+|T|-\rank_{\F_\ell}M_\ell(T;\mathbf a).
+\]
+\end{definition}
+
+\begin{theorem}[Rank formula for first-level \(\ell\)-defects]\label{T:first-level-rank}
+For every finite \(T\),
+\[
+\delta_\ell(T;\mathbf a)=|T|-\rank_{\F_\ell}M_\ell(T;\mathbf a).
+\]
+In particular, the first-level \(\ell\)-synchronization obstruction is trivial if and only if the rows \(x_\ell(q)\) span \(\F_\ell^T\) as a map from exponent space, i.e. \(\phi_{\ell,T}\) is surjective.
+\end{theorem}
+
+\begin{proof}
+This is the rank-nullity theorem applied to the linear map
+\[
+\phi_{\ell,T}:\F_\ell^r\to\F_\ell^T.
+\]
+The cokernel has dimension \(\dim\F_\ell^T-\rank(\phi_{\ell,T})=|T|-\rank M_\ell(T;\mathbf a)\).
+\end{proof}
+
+\begin{corollary}[Defect lower bound]\label{C:defect-lower}
+If \(|T|>r\), then
+\[
+\delta_\ell(T;\mathbf a)\ge |T|-r.
+\]
+\end{corollary}
+
+\begin{proof}
+The matrix \(M_\ell(T;\mathbf a)\) has at most \(r\) columns, so its rank is at most \(r\).  Apply \cref{T:first-level-rank}.
+\end{proof}
+
+\begin{remark}
+This lower bound is not a pathology.  It records the fact that one \(r\)-dimensional exponent vector cannot independently prescribe arbitrary first-level \(\ell\)-data at more than \(r\) prime components.  The analytic problem is to control which defect patterns are forced by Kummer distribution and which are random CRT overdetermination.
+\end{remark}
+
+\section{Projective Kummer points}
+
+\begin{definition}[Projective Kummer point]\label{D:projective-point}
+For \(q\equiv1\pmod\ell\), define the projective Kummer point
+\[
+\sigma_\ell(q;\mathbf a)=[u_{q1}:\cdots:u_{qr}]\in\Pj^{r-1}(\F_\ell)
+\]
+when \(x_\ell(q)\ne0\).  The star atom is the locus
+\[
+x_\ell(q)=0,
+\]
+equivalently all \(a_j\) are \(\ell\)-th powers modulo \(q\).
+\end{definition}
+
+\begin{theorem}[Two-prime projective collision criterion]\label{T:projective-collision}
+Let \(p,q\equiv1\pmod\ell\), and assume \(x_\ell(p),x_\ell(q)\ne0\).  Then
+\[
+\rank
+\begin{pmatrix}
+x_\ell(p)\\
+x_\ell(q)
+\end{pmatrix}
+<2
+\]
+if and only if
+\[
+\sigma_\ell(p;\mathbf a)=\sigma_\ell(q;\mathbf a)
+\quad\text{in }\Pj^{r-1}(\F_\ell).
+\]
+\end{theorem}
+
+\begin{proof}
+Two nonzero vectors in \(\F_\ell^r\) span a one-dimensional subspace if and only if they are scalar multiples.  This is precisely equality of their projective classes.
+\end{proof}
+
+\begin{corollary}[Two-generator determinant criterion recovered]\label{C:det-recovered}
+For \(r=2\), write
+\[
+x_\ell(p)=(u_p,v_p),\qquad x_\ell(q)=(u_q,v_q).
+\]
+Outside the star atom,
+\[
+\sigma_\ell(p)=\sigma_\ell(q)
+\]
+if and only if
+\[
+u_pv_q-u_qv_p\equiv0\pmod\ell.
+\]
+\end{corollary}
+
+\begin{proof}
+Two nonzero vectors in \(\F_\ell^2\) are projectively equal if and only if the \(2\times2\) determinant with those rows is zero.
+\end{proof}
+
+\section{Hyperplane atoms and Kummer fields}
+
+For \(A=(A_1,\ldots,A_r)\in\F_\ell^r\), define the rational element
+\[
+\alpha_A=\prod_{j=1}^r a_j^{A_j}\in\Q^*
+\]
+after choosing integer representatives \(0\le A_j<\ell\).
+
+\begin{proposition}[Hyperplane atom criterion]\label{P:hyperplane}
+For \(q\equiv1\pmod\ell\), \(q\nmid a_1\cdots a_r\),
+\[
+A\cdot x_\ell(q)=0\quad\text{in }\F_\ell
+\]
+if and only if
+\[
+\alpha_A\in(\F_q^*)^\ell.
+\]
+\end{proposition}
+
+\begin{proof}
+Write \(a_j\equiv g_q^{u_{qj}}\).  Then
+\[
+\alpha_A\equiv g_q^{\sum_j A_j u_{qj}}\pmod q.
+\]
+Since \(q\equiv1\pmod\ell\), an element \(g_q^e\in\F_q^*\) is an \(\ell\)-th power if and only if \(e\equiv0\pmod\ell\).  Thus \(\alpha_A\) is an \(\ell\)-th power modulo \(q\) exactly when
+\[
+\sum_j A_j u_{qj}=A\cdot x_\ell(q)\equiv0\pmod\ell.
+\]
+\end{proof}
+
+\begin{definition}[Projective hyperplane Kummer field]\label{D:hyperfield}
+For \(A\ne0\), the hyperplane atom \(A\cdot x_\ell(q)=0\) is controlled by
+\[
+K_{\ell,A}=\Q(\zeta_\ell,\alpha_A^{1/\ell}).
+\]
+The star atom is controlled by
+\[
+K_{\ell,\star}=\Q(\zeta_\ell,a_1^{1/\ell},\ldots,a_r^{1/\ell}).
+\]
+\end{definition}
+
+\begin{lemma}[Rational Kummer independence by valuations]\label{L:kummer-independence}
+Let \(a_1,\ldots,a_r\) be distinct rational primes.  If
+\[
+a_1^{e_1}\cdots a_r^{e_r}\in(\Q(\zeta_\ell)^*)^\ell,
+\qquad
+0\le e_j<\ell,
+\]
+then
+\[
+e_1=\cdots=e_r=0.
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(\mathfrak p_j\) be any prime ideal of \(\Q(\zeta_\ell)\) above the rational prime \(a_j\).  Taking the \(\mathfrak p_j\)-adic valuation of the displayed identity gives
+\[
+e_j\equiv0\pmod\ell,
+\]
+because the valuation of an \(\ell\)-th power is divisible by \(\ell\), while the other rational primes \(a_k\) with \(k\ne j\) have valuation \(0\) at \(\mathfrak p_j\).  Since \(0\le e_j<\ell\), this forces \(e_j=0\).  Applying this for every \(j\) proves the claim.
+\end{proof}
+
+\begin{corollary}[Rank-\(r\) star field degree]\label{C:star-degree}
+For distinct rational primes \(a_1,\ldots,a_r\),
+\[
+[\Q(\zeta_\ell,a_1^{1/\ell},\ldots,a_r^{1/\ell}):\Q(\zeta_\ell)]
+=
+\ell^r.
+\]
+\end{corollary}
+
+\begin{proof}
+By Kummer theory over \(\Q(\zeta_\ell)\), the degree equals the size of the \(\F_\ell\)-span generated by the classes of \(a_1,\ldots,a_r\) in
+\[
+\Q(\zeta_\ell)^*/(\Q(\zeta_\ell)^*)^\ell.
+\]
+\Cref{L:kummer-independence} says these classes are linearly independent.  Hence the span has dimension \(r\), and the extension degree is \(\ell^r\).
+\end{proof}
+
+\begin{corollary}[Expected star density]\label{C:star-density}
+For distinct rational primes \(a_1,\ldots,a_r\), the star atom has relative Chebotarev density \(\ell^{-r}\) among primes \(q\equiv1\pmod\ell\), up to the usual exclusion of ramified primes.
+\end{corollary}
+
+\begin{proof}
+Over \(\Q(\zeta_\ell)\), the star condition is complete splitting in the Kummer extension
+\[
+K_{\ell,\star}/\Q(\zeta_\ell),
+\]
+which has degree \(\ell^r\) by \cref{C:star-degree}.  Therefore the identity Frobenius class has relative density \(1/\ell^r\).
+\end{proof}
+
+\section{Rank-\(r\) collision graphs and hypergraphs}
+
+\begin{definition}[Rank-\(r\) Kummer slope collision graph]\label{D:rankr-graph}
+For \(Q>0\), define \(G_{\ell,r}(Q;\mathbf a)\) to have vertices
+\[
+V_{\ell}(Q)=\{q\le Q:q\equiv1\pmod\ell,\ q\nmid a_1\cdots a_r,\ x_\ell(q)\ne0\}.
+\]
+Two vertices are adjacent if
+\[
+\sigma_\ell(p;\mathbf a)=\sigma_\ell(q;\mathbf a).
+\]
+\end{definition}
+
+\begin{definition}[Rank-defect hypergraph]\label{D:rank-hypergraph}
+For \(k\ge2\), define the \(k\)-uniform rank-defect hypergraph \(H_{\ell,r}^{(k)}(Q;\mathbf a)\) on the same vertex set by declaring
+\[
+\{q_1,\ldots,q_k\}
+\]
+to be a hyperedge when
+\[
+\rank
+\begin{pmatrix}
+x_\ell(q_1)\\
+\vdots\\
+x_\ell(q_k)
+\end{pmatrix}
+<\min(k,r).
+\]
+\end{definition}
+
+\begin{proposition}[Projective graph controls pairwise defects]\label{P:graph-controls}
+The edges of \(G_{\ell,r}(Q;\mathbf a)\) are exactly the two-vertex rank defects in \(H_{\ell,r}^{(2)}(Q;\mathbf a)\).
+\end{proposition}
+
+\begin{proof}
+This is \cref{T:projective-collision} applied to every pair.
+\end{proof}
+
+\begin{proposition}[Hyperplane certificate for rank defect]\label{P:hyperplane-certificate}
+If vectors \(x_\ell(q_1),\ldots,x_\ell(q_k)\) have rank \(<k\le r\), then there exist coefficients \(B_1,\ldots,B_k\in\F_\ell\), not all zero, such that
+\[
+\sum_{i=1}^k B_i x_\ell(q_i)=0.
+\]
+Equivalently, for every exponent vector \(n\in\F_\ell^r\),
+\[
+\sum_{i=1}^k B_i (x_\ell(q_i)\cdot n)=0.
+\]
+\end{proposition}
+
+\begin{proof}
+Rank \(<k\) for the \(k\) row vectors is equivalent to linear dependence among those rows.  That is precisely the existence of a nonzero coefficient vector \(B=(B_i)\) satisfying the displayed relation.
+\end{proof}
+
+\section{Prime-power synchronization}
+
+The squarefree theory records synchronization across distinct prime components.  Prime powers introduce vertical synchronization along the tower
+\[
+q,\ q^2,\ \ldots,\ q^e.
+\]
+
+Let \(q\nmid a_1\cdots a_r\) be an odd prime.  For \(e\ge1\), write
+\[
+G_{q^e}=(\Z/q^e\Z)^*,
+\qquad
+\Gamma_{q^e}(\mathbf a)=\langle a_1,\ldots,a_r\rangle\subset G_{q^e}.
+\]
+
+\begin{theorem}[Prime-power lifting exact sequence]\label{T:primepower-exact}
+For \(e\ge1\), reduction modulo \(q^e\) induces an exact sequence
+\[
+1\longrightarrow
+K_e
+\longrightarrow
+\Gamma_{q^{e+1}}(\mathbf a)
+\longrightarrow
+\Gamma_{q^e}(\mathbf a)
+\longrightarrow1,
+\]
+where
+\[
+K_e=\Gamma_{q^{e+1}}(\mathbf a)\cap(1+q^e\Z/q^{e+1}\Z).
+\]
+Moreover
+\[
+K_e\le 1+q^e\Z/q^{e+1}\Z\simeq(\Z/q\Z,+),
+\]
+so
+\[
+|K_e|\in\{1,q\}.
+\]
+\end{theorem}
+
+\begin{proof}
+Reduction \(G_{q^{e+1}}\to G_{q^e}\) sends each generator \(a_j\bmod q^{e+1}\) to \(a_j\bmod q^e\).  Hence it maps \(\Gamma_{q^{e+1}}(\mathbf a)\) onto \(\Gamma_{q^e}(\mathbf a)\).  Its kernel on the full unit group is
+\[
+1+q^e\Z/q^{e+1}\Z,
+\]
+which is cyclic of order \(q\) and canonically isomorphic to the additive group \(\Z/q\Z\) by
+\[
+1+q^e t\longmapsto t\bmod q.
+\]
+Intersecting this kernel with \(\Gamma_{q^{e+1}}(\mathbf a)\) gives \(K_e\).  Since the ambient kernel has prime order \(q\), the subgroup \(K_e\) has order \(1\) or \(q\).
+\end{proof}
+
+\begin{corollary}[Prime-power subgroup growth]\label{C:primepower-growth}
+For every \(e\ge1\),
+\[
+|\Gamma_{q^{e+1}}(\mathbf a)|
+=
+|\Gamma_{q^e}(\mathbf a)|\,|K_e|,
+\]
+with \(|K_e|\in\{1,q\}\).  Consequently
+\[
+|\Gamma_{q^e}(\mathbf a)|
+=
+|\Gamma_q(\mathbf a)|\,q^{N_e},
+\]
+where \(0\le N_e\le e-1\) is the number of levels \(1\le h<e\) for which \(K_h\) is nontrivial.
+\end{corollary}
+
+\begin{proof}
+The size formula follows from the exact sequence in \cref{T:primepower-exact}.  Iterating from level \(1\) to \(e\) gives the displayed expression.
+\end{proof}
+
+\begin{definition}[Vertical lifting defect]\label{D:vertical-defect}
+The vertical lifting defect at level \(e\) is
+\[
+\nu_{q,e}(\mathbf a)=e-1-N_e.
+\]
+It counts how many prime-power lifting levels fail to enlarge the subgroup by the full factor \(q\).
+\end{definition}
+
+\begin{proposition}[General-modulus defect factorization]\label{P:general-modulus}
+Let
+\[
+d=\prod_{i=1}^s q_i^{e_i}
+\]
+with \((d,a_1\cdots a_r)=1\).  Then under CRT,
+\[
+|\Gamma_d(\mathbf a)|
+=
+\frac{\prod_i |\Gamma_{q_i^{e_i}}(\mathbf a)|}{|\mathcal S_d^{\mathrm{full}}(\mathbf a)|},
+\]
+where
+\[
+\mathcal S_d^{\mathrm{full}}(\mathbf a)
+=
+\left(\prod_i\Gamma_{q_i^{e_i}}(\mathbf a)\right)/\Gamma_d(\mathbf a).
+\]
+Equivalently,
+\[
+|\Gamma_d(\mathbf a)|
+=
+\frac{\prod_i |\Gamma_{q_i}(\mathbf a)|\,q_i^{N_{e_i}}}
+{|\mathcal S_d^{\mathrm{full}}(\mathbf a)|}.
+\]
+\end{proposition}
+
+\begin{proof}
+The first formula is the same quotient-counting argument as \cref{P:size-defect}, applied to prime-power CRT components.  The second formula substitutes \cref{C:primepower-growth} for each component.
+\end{proof}
+
+\section{Insertion points for the EG203 stack}
+
+\begin{enumerate}[leftmargin=1.5em]
+\item Paper 2 receives \cref{T:rankr-membership}, \cref{D:rankr-defect}, and \cref{T:projective-collision} as a new final section: ``Rank-\(r\) synchronization.'' 
+\item The companion note on exact \(\Gamma\)-fiber local density receives \cref{T:primepower-exact}--\cref{P:general-modulus} as the general-modulus extension.
+\item The program overview receives the line:
+\[
+\boxed{\text{The projective slope invariant extends from }\Pj^1(\F_\ell)\text{ to }\Pj^{r-1}(\F_\ell)\text{ for rank }r.}
+\]
+\item The next computational script should implement \(r=3\), \(\mathbf a=(2,3,5)\), by computing \(x_\ell(q)\), the row-rank distribution of \(M_\ell(T;\mathbf a)\), and the spectral gap of \(G_{\ell,3}(Q;\mathbf a)\).
+\end{enumerate}
+
+\end{document}

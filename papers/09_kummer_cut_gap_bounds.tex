@@ -1,0 +1,348 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathbb E}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\C}{\mathbb C}
+\newcommand{\supp}{\operatorname{supp}}
+
+\title{Kummer Cut-Gap Bounds for Fourier Collision Excess}
+\author{Jared Wilder}
+\date{2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note sharpens the exact Kummer-Fourier collision-variance identity into finite cut-gap bounds.  The normalized collision excess is a nonnegative finite Fourier sum over nonzero dual modes \(A\in\F_\ell^r\).  Its leading scale is controlled by the largest Fourier product, equivalently the minimum logarithmic Kummer hyperplane cut \(\Lambda_*\), together with the multiplicity \(k_*\) of the minimizing dual modes and the first spectral gap \(\Delta\).  In the binary case \(\ell=2\), \(\Lambda_*\) becomes a weighted support problem in the row-space code attached to the Kummer log matrix; under positive finite weights this is the minimum weighted cocircuit of the associated representable matroid.  A final row-balance corollary converts finite Kummer cut size into an explicit exponential collision-decay certificate.  The result is exact finite algebra and makes no PHNC, BVK, GRH, or Erd\H{o}s--Graham conclusion.
+\end{abstract}
+
+\section{Setup}
+
+Let \(\mathcal Q\) be a finite set of primes,
+\[
+P=\prod_{q\in\mathcal Q}q,
+\]
+and let \(x_q\in\F_\ell^r\) be Kummer log rows for a fixed base vector.  Put
+\[
+p_q=\frac{|\Gamma_q|}{q-1}.
+\]
+For \(m\in(\Z/P\Z)^*\), let
+\[
+B_q(m)=\one_{\Gamma_q}(-m_q^{-1})
+\]
+and define the Bernoulli-Kummer obstruction vector
+\[
+V(m)=\sum_{q\in\mathcal Q}B_q(m)x_q\in\F_\ell^r.
+\]
+Let
+\[
+N(v)=\#\{m\in(\Z/P\Z)^*:V(m)=v\},
+\qquad
+\bar N=\frac{\varphi(P)}{\ell^r},
+\]
+and
+\[
+\mathcal C_\ell(N)=\sum_{v\in\F_\ell^r}(N(v)-\bar N)^2.
+\]
+
+The previous note proves the exact identity
+\begin{equation}\label{E:paper8-identity}
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+=
+\ell^{-r}\sum_{A\in\F_\ell^r\setminus\{0\}}
+\prod_{q\in\mathcal Q}F_q(A),
+\end{equation}
+where
+\begin{equation}\label{E:local-factor}
+F_q(A)=
+1-2p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right).
+\end{equation}
+For all \(q\) and \(A\), \(0\le F_q(A)\le1\).  The only point requiring care is the zero-factor case, handled below by the convention \(e^{-\infty}=0\).
+
+\section{Logarithmic cut weights}
+
+\begin{definition}[Kummer Fourier cut]
+For \(A\in\F_\ell^r\setminus\{0\}\), define
+\[
+\Lambda(A)=\sum_{q\in\mathcal Q}-\log F_q(A),
+\]
+with \(-\log0=+\infty\).  Define
+\[
+\Lambda_*=\min_{A\ne0}\Lambda(A).
+\]
+If \(\Lambda_*<\infty\), define the minimizer set
+\[
+\mathcal M_*=\{A\in\F_\ell^r\setminus\{0\}:\Lambda(A)=\Lambda_*\},
+\qquad
+k_*=|\mathcal M_*|.
+\]
+\end{definition}
+
+With these conventions, \eqref{E:paper8-identity} becomes
+\begin{equation}\label{E:log-sum}
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+=
+\ell^{-r}\sum_{A\ne0}e^{-\Lambda(A)}.
+\end{equation}
+
+\begin{proposition}[Crude minimum-cut clamp]\label{P:crude}
+If \(\Lambda_*<\infty\), then
+\[
+\ell^{-r}e^{-\Lambda_*}
+\le
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+(1-\ell^{-r})e^{-\Lambda_*}.
+\]
+If \(\Lambda_*=+\infty\), then \(\mathcal C_\ell(N)=0\).
+\end{proposition}
+
+\begin{proof}
+If \(\Lambda_*=+\infty\), every summand in \eqref{E:log-sum} is zero.  Otherwise at least one summand equals \(e^{-\Lambda_*}\), proving the lower bound.  Since there are exactly \(\ell^r-1\) nonzero dual modes and every summand is at most \(e^{-\Lambda_*}\), the upper bound follows.
+\end{proof}
+
+\begin{remark}[Why this proposition is not the endpoint]
+\Cref{P:crude} is valid but deliberately coarse.  It treats all nonzero dual modes as if they could sit at the minimum simultaneously, and it ignores the number of minimizing cuts and the first gap above them.  The next theorem is the useful finite form.
+\end{remark}
+
+\section{Cut-gap theorem}
+
+\begin{definition}[First spectral gap]
+Assume \(\Lambda_*<\infty\).  Define
+\[
+\Delta=
+\min_{A\notin\mathcal M_*}\bigl(\Lambda(A)-\Lambda_*\bigr),
+\]
+with \(\Delta=+\infty\) if \(\mathcal M_*=\F_\ell^r\setminus\{0\}\) or if all nonminimizing terms have infinite weight.
+\end{definition}
+
+\begin{theorem}[Finite Kummer cut-gap bound]\label{T:cut-gap}
+Assume \(\Lambda_*<\infty\).  Then
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+=
+\frac{k_*}{\ell^r}e^{-\Lambda_*}(1+R),
+\]
+where
+\[
+0\le R\le
+\frac{\ell^r-1-k_*}{k_*}e^{-\Delta}.
+\]
+Equivalently,
+\[
+\frac{k_*}{\ell^r}e^{-\Lambda_*}
+\le
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+\frac{k_*}{\ell^r}e^{-\Lambda_*}
+\left[
+1+
+\frac{\ell^r-1-k_*}{k_*}e^{-\Delta}
+\right].
+\]
+\end{theorem}
+
+\begin{proof}
+Partition the finite sum \eqref{E:log-sum} into the minimizing modes and the remaining modes:
+\[
+\sum_{A\ne0}e^{-\Lambda(A)}
+=
+\sum_{A\in\mathcal M_*}e^{-\Lambda_*}
++
+\sum_{A\notin\mathcal M_*}e^{-\Lambda(A)}.
+\]
+The first sum is \(k_*e^{-\Lambda_*}\).  Factoring it from the whole expression gives
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+=
+\frac{k_*}{\ell^r}e^{-\Lambda_*}
+\left[
+1+
+\frac1{k_*}\sum_{A\notin\mathcal M_*}
+e^{-(\Lambda(A)-\Lambda_*)}
+\right].
+\]
+The bracketed remainder is nonnegative.  By definition of \(\Delta\), every nonminimizing finite term satisfies
+\[
+e^{-(\Lambda(A)-\Lambda_*)}\le e^{-\Delta},
+\]
+and there are at most \(\ell^r-1-k_*\) such modes.  Infinite terms contribute zero.  This proves the stated bound.
+\end{proof}
+
+\begin{corollary}[First excited shell]\label{C:first-shell}
+Assume \(\Lambda_*<\infty\) and \(\Delta<\infty\).  Let
+\[
+k_1=\#\{A:\Lambda(A)=\Lambda_*+\Delta\}.
+\]
+If
+\[
+\Delta_2=\min_{\Lambda(A)>\Lambda_*+\Delta}
+\bigl(\Lambda(A)-\Lambda_*\bigr)
+\]
+exists, with the same \(+\infty\) convention, then
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+=
+\ell^{-r}e^{-\Lambda_*}
+\left[
+k_*+k_1e^{-\Delta}
++O_\ell(e^{-\Delta_2})
+\right],
+\]
+where the implicit constant is at most \(\ell^r-1-k_*-k_1\).  If no second excited shell exists, the displayed expression is exact without the \(O_\ell\)-term.
+\end{corollary}
+
+\begin{proof}
+Repeat the partition in the proof of \cref{T:cut-gap}, now separating the modes with weights \(\Lambda_*\), \(\Lambda_*+\Delta\), and the rest.
+\end{proof}
+
+\section{Binary specialization}
+
+For \(\ell=2\),
+\[
+\cos\frac{2\pi(A\cdot x_q)}{2}
+=
+\begin{cases}
+1,& A\cdot x_q=0,\\
+-1,& A\cdot x_q=1.
+\end{cases}
+\]
+Thus
+\[
+F_q(A)=
+1-4p_q(1-p_q)\one_{A\cdot x_q\ne0}.
+\]
+Set
+\[
+w_q=-\log(1-4p_q(1-p_q)),
+\]
+with \(w_q=+\infty\) when \(p_q=1/2\).  Then
+\begin{equation}\label{E:binary-cut}
+\Lambda(A)=\sum_{q:A\cdot x_q=1}w_q.
+\end{equation}
+
+\begin{theorem}[Binary weighted Kummer cut]\label{T:binary}
+For \(\ell=2\), the normalized collision excess is controlled by the minimum weighted support of the nonzero row-space codewords
+\[
+c_A=(A\cdot x_q)_{q\in\mathcal Q}\in\F_2^{\mathcal Q}.
+\]
+Precisely, if
+\[
+\Lambda_*=\min_{A\ne0}\sum_{q:c_A(q)=1}w_q<\infty,
+\]
+then \cref{T:cut-gap} applies with \(\Lambda(A)\) given by \eqref{E:binary-cut}.  If all finite weights are strictly positive, \(\Lambda_*\) is realized by a minimum-weight cocircuit of the binary representable matroid whose columns are the \(x_q\).
+\end{theorem}
+
+\begin{proof}
+The formula \eqref{E:binary-cut} is immediate from the binary local factor.  The cut-gap bounds are then \cref{T:cut-gap}.  The vectors \(c_A\) are precisely the nonzero codewords in the row-space code of the Kummer log matrix.  In a binary vector matroid represented by the columns \(x_q\), supports of nonzero row-space codewords are covectors, and inclusion-minimal nonempty such supports are cocircuits.  With strictly positive finite weights, a minimum-weight nonzero support may be replaced by an inclusion-minimal nonempty support contained in it without increasing weight; hence an optimum is realized by a cocircuit.
+\end{proof}
+
+\begin{remark}[Safe matroid language]
+For \(\ell=2\) with uniform positive weights, the binary specialization is the ordinary Hamming-weight enumerator of the row-space code, equivalently a coboundary-polynomial specialization.  With nonuniform weights it is a multivariate weighted enumerator.  For \(\ell>2\), the scalar value \(A\cdot x_q\in\F_\ell\), not just its vanishing, affects the cosine factor.  The safe general description is therefore a weighted Fourier hyperplane-arrangement sum or complete-weight-enumerator specialization, not a plain ordinary Tutte invariant.
+\end{remark}
+
+\section{Row-balance decay certificates}
+
+\begin{definition}[Angular Kummer energy]
+For \(A\ne0\), define
+\[
+\mathcal E(A)=
+\sum_{q\in\mathcal Q}
+2p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right),
+\]
+and put
+\[
+\mathcal E_*=\min_{A\ne0}\mathcal E(A).
+\]
+\end{definition}
+
+\begin{corollary}[Angular-energy upper bound]\label{C:angular-energy}
+The normalized collision excess satisfies
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+(1-\ell^{-r})e^{-\mathcal E_*}.
+\]
+\end{corollary}
+
+\begin{proof}
+Each local factor has the form \(F_q(A)=1-y_q(A)\), where
+\[
+y_q(A)=2p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right)
+\]
+and \(0\le y_q(A)\le1\).  Since \(1-y\le e^{-y}\) for \(0\le y\le1\),
+\[
+\prod_{q\in\mathcal Q}F_q(A)
+\le
+\exp(-\mathcal E(A))
+\le
+\exp(-\mathcal E_*).
+\]
+Summing over the \(\ell^r-1\) nonzero dual modes in \eqref{E:paper8-identity} proves the claim.
+\end{proof}
+
+\begin{corollary}[Binary row-balance decay]\label{C:binary-row-balance}
+Assume \(\ell=2\).  Let \(0<\alpha\le1/2\), and suppose
+\[
+\alpha\le p_q\le1-\alpha
+\qquad(q\in\mathcal Q).
+\]
+If every nonzero dual vector cuts at least \(d\) rows,
+\[
+\#\{q\in\mathcal Q:A\cdot x_q=1\}\ge d
+\qquad(A\in\F_2^r\setminus\{0\}),
+\]
+then
+\[
+\frac{\mathcal C_2(N)}{\varphi(P)^2}
+\le
+(1-2^{-r})\bigl(1-4\alpha(1-\alpha)\bigr)^d.
+\]
+\end{corollary}
+
+\begin{proof}
+For each row cut by \(A\), the binary local factor is
+\[
+1-4p_q(1-p_q)\le1-4\alpha(1-\alpha).
+\]
+Rows not cut by \(A\) contribute factor \(1\).  Thus every nonzero Fourier product is at most
+\[
+\bigl(1-4\alpha(1-\alpha)\bigr)^d.
+\]
+There are \(2^r-1\) nonzero dual modes.  Substitution in \eqref{E:paper8-identity} gives the result.
+\end{proof}
+
+\begin{remark}[Bridge to future analytic work]
+\Cref{C:binary-row-balance} cleanly separates the next analytic task from the finite algebra: prove row-balance or angular-energy lower bounds for the Kummer log rows \(x_q\).  Once such a lower bound is available, collision excess decays exponentially in the certified cut size \(d\), without adding any new finite-algebra hypothesis.
+\end{remark}
+
+\section{Dependency status}
+
+\begin{itemize}[leftmargin=2em]
+\item The theorem is exact finite algebra: dependency class \(E\).
+\item The only inputs are the Paper 8 Plancherel/CRT identity and finite ordering of nonnegative terms.
+\item No PHNC, BVK, Kummer-BV, GRH, Chebotarev error term, Vandiver-type statement, or Erd\H{o}s--Graham conclusion is used.
+\item The useful output is a theorem-grade finite compression of the collision spectrum: \((\Lambda_*,k_*,\Delta)\) controls the leading collision excess.
+\end{itemize}
+
+\end{document}

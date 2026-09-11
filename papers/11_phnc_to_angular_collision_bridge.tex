@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+
+\newcommand{\F}{\mathbb F}
+\newcommand{\E}{\mathcal E}
+
+\title{From Prime Hecke Non-Concentration to Angular Kummer Collision Decay}
+\author{Jared Wilder}
+\date{2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper 10 separates fixed-\(\ell\) Kummer row-balance from the high-\(\ell\) analytic seam.  This note sharpens that bridge.  A constant angular non-concentration hypothesis is sufficient but stronger than necessary.  Under a density-floor assumption for the local obstruction weights, ordinary prime Hecke non-concentration already implies the angular-energy lower bound needed by Paper 9, after paying the sharp universal cosine loss \(1-\cos(2\pi/\ell)\ge8/\ell^2\).  Consequently PHNC with exponent \(C\) gives normalized Kummer collision decay of size \(\exp(-c_\alpha \ell^{-C-2}|\mathcal Q|)\).  In the range \(\ell\le(\log Q)^B\), this exponent still diverges provided \(C\) is fixed.  The result is conditional on PHNC and does not prove PHNC, Kummer-BV, KRWS, or Erd\H{o}s--Graham \#203.
+\end{abstract}
+
+\section{Setup}
+
+Let \(\mathcal Q\) be a finite prime set, let \(x_q\in\F_\ell^r\) be Kummer log rows, and let
+\[
+p_q=\frac{|\Gamma_q|}{q-1}.
+\]
+For \(A\in\F_\ell^r\setminus\{0\}\), Paper 9 defines angular energy
+\[
+\E(A)=
+\sum_{q\in\mathcal Q}
+2p_q(1-p_q)
+\left(1-\cos\frac{2\pi(A\cdot x_q)}{\ell}\right),
+\]
+and
+\[
+\E_*=\min_{A\ne0}\E(A).
+\]
+Paper 9 proves
+\begin{equation}\label{E:paper9-angular}
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+(1-\ell^{-r})e^{-\E_*}.
+\end{equation}
+
+\section{The cosine loss}
+
+\begin{lemma}[Universal cosine gap]\label{L:cosine-gap}
+For every prime \(\ell\ge2\) and every nonzero \(t\in\F_\ell\),
+\[
+1-\cos\frac{2\pi t}{\ell}
+\ge
+\frac8{\ell^2}.
+\]
+\end{lemma}
+
+\begin{proof}
+For \(1\le t\le\ell-1\), the minimum of \(1-\cos(2\pi t/\ell)\) occurs at \(t=1\) or \(t=\ell-1\).  Thus it suffices to show
+\[
+1-\cos\frac{2\pi}{\ell}\ge\frac8{\ell^2}.
+\]
+For \(\ell=2\), both sides equal \(2\).  For \(\ell\ge3\), use
+\[
+1-\cos u=2\sin^2(u/2)
+\]
+with \(u=2\pi/\ell\).  Since \(0\le\pi/\ell\le\pi/3\) and \(\sin x\ge 2x/\pi\) for \(0\le x\le\pi/2\),
+\[
+1-\cos\frac{2\pi}{\ell}
+=2\sin^2\frac{\pi}{\ell}
+\ge
+2\left(\frac{2}{\ell}\right)^2
+=\frac8{\ell^2}.
+\]
+\end{proof}
+
+\section{PHNC to angular energy}
+
+\begin{hypothesis}[Hyperplane PHNC on \(\mathcal Q\)]\label{H:finite-phnc}
+There is a constant \(C>0\) such that, for every nonzero \(A\in\F_\ell^r\),
+\[
+\#\{q\in\mathcal Q:A\cdot x_q\ne0\}
+\ge
+\ell^{-C}|\mathcal Q|.
+\]
+\end{hypothesis}
+
+\begin{theorem}[PHNC-to-angular bridge]\label{T:phnc-angular}
+Assume \cref{H:finite-phnc}.  If there is \(0<\alpha\le1/2\) such that
+\[
+\alpha\le p_q\le1-\alpha
+\qquad(q\in\mathcal Q),
+\]
+then
+\[
+\E_*
+\ge
+16\alpha(1-\alpha)\ell^{-C-2}|\mathcal Q|.
+\]
+Consequently,
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+(1-\ell^{-r})
+\exp\left(
+-16\alpha(1-\alpha)\ell^{-C-2}|\mathcal Q|
+\right).
+\]
+\end{theorem}
+
+\begin{proof}
+Fix \(A\ne0\).  For each \(q\) with \(A\cdot x_q\ne0\), \cref{L:cosine-gap} gives
+\[
+1-\cos\frac{2\pi(A\cdot x_q)}{\ell}
+\ge
+\frac8{\ell^2}.
+\]
+The density floor gives
+\[
+2p_q(1-p_q)\ge2\alpha(1-\alpha).
+\]
+Therefore
+\[
+\E(A)
+\ge
+\sum_{q:A\cdot x_q\ne0}
+2\alpha(1-\alpha)\frac8{\ell^2}.
+\]
+By \cref{H:finite-phnc}, the summation set has size at least \(\ell^{-C}|\mathcal Q|\).  Hence
+\[
+\E(A)\ge16\alpha(1-\alpha)\ell^{-C-2}|\mathcal Q|.
+\]
+This is uniform in \(A\ne0\), so it holds for \(\E_*\).  Substitution into \eqref{E:paper9-angular} proves the collision bound.
+\end{proof}
+
+\section{Weighted form}
+
+The density-floor assumption is convenient but not always natural.  The exact finite statement is weighted.
+
+\begin{hypothesis}[Weighted PHNC]\label{H:weighted-phnc}
+There is a quantity \(W_\ell(\mathcal Q)>0\) such that, for every nonzero \(A\in\F_\ell^r\),
+\[
+\sum_{q:A\cdot x_q\ne0}p_q(1-p_q)\ge W_\ell(\mathcal Q).
+\]
+\end{hypothesis}
+
+\begin{theorem}[Weighted PHNC-to-angular bridge]\label{T:weighted}
+Assume \cref{H:weighted-phnc}.  Then
+\[
+\E_*\ge \frac{16}{\ell^2}W_\ell(\mathcal Q),
+\]
+and therefore
+\[
+\frac{\mathcal C_\ell(N)}{\varphi(P)^2}
+\le
+(1-\ell^{-r})\exp\left(-\frac{16}{\ell^2}W_\ell(\mathcal Q)\right).
+\]
+\end{theorem}
+
+\begin{proof}
+Repeat the proof of \cref{T:phnc-angular}, but do not replace \(p_q(1-p_q)\) by a uniform floor.  For all nonzero \(A\),
+\[
+\E(A)\ge
+\frac{16}{\ell^2}
+\sum_{q:A\cdot x_q\ne0}p_q(1-p_q)
+\ge
+\frac{16}{\ell^2}W_\ell(\mathcal Q).
+\]
+Then use \eqref{E:paper9-angular}.
+\end{proof}
+
+\section{High-\texorpdfstring{\(\ell\)}{ell} consequence}
+
+Specialize to primes \(q\le Q\), \(q\equiv1\pmod\ell\), and write
+\[
+|\mathcal Q|\asymp \frac{Q}{\ell\log Q}
+\]
+in the standard prime-number-theorem scale.  If
+\[
+\ell\le(\log Q)^B
+\]
+and PHNC supplies a fixed exponent \(C=C(B)\), then \cref{T:phnc-angular} gives
+\[
+\E_*
+\gg_\alpha
+\frac{Q}{\ell^{C+3}\log Q}
+\gg_{\alpha,B,C}
+\frac{Q}{(\log Q)^{B(C+3)+1}}.
+\]
+Thus \(\E_*\to\infty\) faster than any negative power of \(\log Q\), and the normalized collision excess in \eqref{E:paper9-angular} tends to zero exponentially in this scale.
+
+\begin{remark}[What this does and does not replace]
+This theorem shows that Paper 10's constant angular non-concentration hypothesis is stronger than needed for collision-excess decay.  It does not prove PHNC.  It also does not by itself replace KRWS or Kummer-BV in Paper 4: it supplies a Plancherel \(L^2\) collision decay input, while KRWS and BVK still encode additional smoothing and sieve-transfer requirements.
+\end{remark}
+
+\section{Rank-\texorpdfstring{\(r\)}{r} status}
+
+The theorem is not special to \(r=2\).  For rank \(r\), the correct PHNC input is hyperplane non-concentration:
+\[
+\#\{q\in\mathcal Q:x_q\notin H_A\}
+\ge
+\ell^{-C}|\mathcal Q|
+\qquad(A\ne0).
+\]
+The only rank dependence in the collision bound is the harmless Plancherel prefactor \(1-\ell^{-r}\).  For fixed \(r\), this prefactor does not compete with the exponential decay.  If \(r\) grows with \(Q\), one must separately require \(\E_*\gg r\log\ell\) to dominate the number of nonzero Fourier modes.
+
+\section{Dependency status}
+
+\begin{itemize}[leftmargin=2em]
+\item The PHNC-to-angular bridge is finite once \cref{H:finite-phnc} or \cref{H:weighted-phnc} is assumed.
+\item The proof uses only Paper 9's angular-energy bound and the elementary cosine gap in \cref{L:cosine-gap}.
+\item The result is conditional on PHNC or weighted PHNC.  It does not prove PHNC.
+\item The result proves collision-excess decay, not the full KRWS/BVK sieve conclusion.
+\item No Erd\H{o}s--Graham \#203 resolution is asserted.
+\end{itemize}
+
+\end{document}

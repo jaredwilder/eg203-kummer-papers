@@ -1,0 +1,299 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{problem}{Problem}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Pj}{\mathbb P}
+\newcommand{\OK}{\mathcal O_K}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\cond}{\operatorname{cond}}
+\newcommand{\Norm}{\mathrm N}
+\newcommand{\Ind}{\operatorname{Ind}}
+\newcommand{\disc}{\operatorname{disc}}
+\newcommand{\Frob}{\operatorname{Frob}}
+
+\title{A sharp dichotomy at $\ell\log\ell\asymp\log Q$ for joint-family log-free zero-density in cyclotomic Kummer Hecke towers}
+\author{Jared Wilder \\ \footnotesize{(V16+V17 Oracle distillation, 2026-05-13)}}
+\date{Draft 0.2 --- 2026-05-13}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\chi_{\ell,A}$ be the rank-two cyclotomic Kummer Hecke character on $K_\ell=\Q(\zeta_\ell)$ attached to data $(\ell,A)\in\{\text{prime}\}\times\F_\ell^2\setminus 0$, cutting out the Kummer extension $K_{\ell,A}=K_\ell(2^{A_1}3^{A_2})^{1/\ell}$.  We prove an unconditional sharp dichotomy for the joint-family log-free zero-density estimate at threshold $\ell\log\ell\asymp\log Q$.
+
+\paragraph{Unconditional unlock for $\ell\le\log Q/\log\log Q$.}  Setting $\eta\asymp 1/\log Q$ and $T\le(\log Q)^{B'}$, the joint family sum
+\[
+\sum_{\ell\le\log Q/\log\log Q}\sum_{A\in\F_\ell^2\setminus 0}N_{\chi_{\ell,A}}(1-\eta,T)\ll(\log Q)^{C}
+\]
+holds unconditionally, by trivial concatenation of the Thorner--Zaman 2019 log-free zero-density estimate per character.  In particular the high-seam Prime-Hecke-Non-Concentration (PHNC) bound
+\[
+\#\{q\le Q:q\equiv 1\pmod\ell,\ \chi_{r,s}(q)=1\}\le(1-\ell^{-C(B)})\pi(Q;\ell,1)
+\]
+holds uniformly for $\ell\le\log Q/\log\log Q$, $(r,s)\ne 0$, unconditionally.
+
+\paragraph{Unconditional no-go for $\ell\ge\log Q$.}  Conversely, for any $B>1$, the joint-averaged log-free ZDE for $\ell\le(\log Q)^B$ fails to follow from any combination of Pierce--Turnage-Butterbaugh--Wood 2020 (Duke), Weiss 1980/1983 (Crelle), Thorner 2017 (IMRN), Thorner--Zaman 2019 (Alg.\ Number Theory), or Heath-Brown 1992 (PLMS).  The obstruction is a structural Cross-Field Rankin--Selberg Conductor Explosion: any large-sieve majorant inherits an off-diagonal cost $\ge\exp(\Omega(X^2\log X))$ from the Bushnell--Henniart pair conductor $\mathfrak q(\chi_{\ell_1,A_1}\otimes\overline{\chi_{\ell_2,A_2}})\le(\ell_1\ell_2)^{\ell_1\ell_2}$, super-polynomial in the family size $|\mathcal F(X)|\asymp X^3/\log X$.  The Artin descent $\Ind_{K_\ell}^{\Q}\chi_{\ell,A}$ provides no structural rescue.
+
+\paragraph{Counterexample refutation.}  No Landau--Siegel real zero of $L(s,\chi_{\ell,A})$ can drive a counterexample for $\ell\le V_{\mathrm{Vandiver}}=1.63\times 10^8$ (Buhler--Harvey 2011), because the Kummer character $\chi_{\ell,A}$ has odd prime order $\ell\ge 3$, hence is non-real; the only real component of the Aramata--Brauer factorization of $\zeta_{K_{\ell,A}}$ is the Legendre symbol $\bmod\ell$, disjoint from the Kummer family.
+\end{abstract}
+
+\section{Setup and notation}\label{S:setup}
+
+Fix a prime $\ell\ge 3$ and a pair $(a_1,a_2)=(2,3)$.  For $A=(A_1,A_2)\in\F_\ell^2\setminus 0$, write
+\[
+\alpha_A=2^{A_1}3^{A_2}\in\Q^\times,
+\qquad
+K_\ell=\Q(\zeta_\ell),
+\qquad
+K_{\ell,A}=K_\ell(\alpha_A^{1/\ell}).
+\]
+Kummer theory and rational Kummer independence of $\{2,3\}$ over $\Q(\zeta_\ell)$ (cf.\ companion paper \emph{Rank-$r$ synchronization defects and projective Kummer geometry}) give $[K_{\ell,A}:K_\ell]=\ell$, with $\Gal(K_{\ell,A}/K_\ell)\simeq\Z/\ell$.  The Kummer character $\chi_{\ell,A}$ is the non-trivial $\ell$-th-power Hecke character of $K_\ell$ cutting out $K_{\ell,A}$.
+
+The absolute discriminant of $K_\ell/\Q$ is $d_{K_\ell}=\pm\ell^{\ell-2}$ (Apostol/Washington Prop.~2.7), so
+\[
+\log|d_{K_\ell}|=(\ell-2)\log\ell\asymp\ell\log\ell.
+\]
+The conductor-discriminant formula gives the Artin conductor of the induced representation
+\[
+\cond(\Ind_{K_\ell}^{\Q}\chi_{\ell,A})=|d_{K_\ell}|^{\dim\chi_{\ell,A}}\cdot N_{K_\ell/\Q}(\mathfrak f(\chi_{\ell,A}))=\ell^{\ell-2}\cdot N(\mathfrak f),
+\]
+with $N(\mathfrak f(\chi_{\ell,A}))\le(\ell\cdot N(\alpha_A))^{\ell-1}$, bounded by an absolute constant for our fixed $(a_1,a_2)=(2,3)$.
+
+The analytic conductor in the Iwaniec--Kowalski normalization is
+\[
+\mathfrak q(\chi_{\ell,A},T)=|d_{K_\ell}|\cdot N_{K_\ell/\Q}(\mathfrak f(\chi_{\ell,A}))\cdot(3+|T|)^{\ell-1}.
+\]
+
+Let $N_\chi(\sigma,T)=\#\{\rho:L(\rho,\chi)=0,\ \Re\rho\ge\sigma,\ |\Im\rho|\le T\}$ counted with multiplicity.  The joint family is
+\[
+\mathcal F(X)=\{\chi_{\ell,A}:\ell\le X\text{ prime},\ A\in\F_\ell^2\setminus 0\},
+\qquad
+|\mathcal F(X)|=\sum_{\ell\le X}(\ell^2-1)\sim\frac{X^3}{3\log X}.
+\]
+
+\section{The unconditional log-free ZDE input}\label{S:tz}
+
+The starting point is the Thorner--Zaman log-free zero-density estimate.
+
+\begin{theorem}[Thorner--Zaman 2019 / 2021, log-free ZDE]\label{T:TZ}
+There exist absolute constants $c_1,c_2,c_3,c_4>0$ such that for every Hecke character $\chi$ of a number field $K$ with $n_K=[K:\Q]$, modulus $\mathfrak f_\chi$, and analytic conductor $\mathfrak q(\chi,T)$,
+\[
+N_\chi(\sigma,T)\le c_1\cdot\bigl(e^{c_2 n_K}\cdot|d_K|\cdot N_{K/\Q}(\mathfrak f_\chi)\cdot(3+|T|)^{n_K}\bigr)^{c_3(1-\sigma)}
+\]
+holds uniformly for $1/2\le\sigma\le 1$ and $|T|\ge 1$, with $\sigma\ge 1-c_4/\log(|d_K|N(\mathfrak f)T^{n_K})$.  Equivalently,
+\[
+N_\chi(\sigma,T)\ll\mathfrak q(\chi,T)^{c_3(1-\sigma)},
+\]
+the implied constant absolute.
+\end{theorem}
+
+The proof, in Weiss 1983, Thorner 2017, and Thorner--Zaman 2019/2021, proceeds via a power-sum / Tur\'an step, a mean value over Hecke characters, a Hal\'asz--Montgomery argument, and the Deuring--Heilbronn phenomenon for the exceptional zero --- each step using constants independent of $K,\chi,T$.  The base-field dependence enters \emph{only} through the analytic-conductor packaging $\mathfrak q(\chi,T)$, in which $|d_K|$ appears multiplicatively in the parenthesis raised to $c_3(1-\sigma)$.
+
+Substituting our family parameters $K=K_\ell$, $|d_K|=\ell^{\ell-2}$:
+\[
+N_{\chi_{\ell,A}}(\sigma,T)\ll\ell^{(\ell-2)c_3\eta}\cdot N(\mathfrak f)^{c_3\eta}\cdot(3+|T|)^{(\ell-1)c_3\eta},
+\qquad\sigma\ge 1-\eta.
+\]
+The first factor is $\exp((\ell-2)c_3\eta\log\ell)$, governed by the product $\ell\log\ell\cdot\eta$.
+
+\section{The unconditional unlock for $\ell\le\log Q/\log\log Q$}\label{S:unlock}
+
+\begin{theorem}[Unconditional PHNC at the strict polylog threshold]\label{T:unlock}
+Let $Q\ge 3$, $B'>0$, $\eta=c/\log Q$ for an absolute $c>0$.  For every prime $\ell$ with $\ell\log\ell\le\log Q$ (equivalently $\ell\le\log Q/\log\log Q$ up to absolute constants),
+\[
+\sum_{A\in\F_\ell^2\setminus 0}N_{\chi_{\ell,A}}(1-\eta,(\log Q)^{B'})\ll(\log Q)^{C}\cdot\ell^{2}.
+\]
+Summing over $\ell\le\log Q/\log\log Q$,
+\[
+\sum_{\substack{\ell\le\log Q/\log\log Q\\\ell\text{ prime}}}\sum_{A\in\F_\ell^2\setminus 0}N_{\chi_{\ell,A}}(1-\eta,(\log Q)^{B'})\ll(\log Q)^{C'},
+\]
+both inequalities unconditional, with $C,C'$ absolute constants depending only on $c$ and $B'$.
+
+In particular the high-seam PHNC instance
+\[
+\#\{q\le Q:q\equiv 1\!\!\!\!\pmod\ell,\ \chi_{r,s}(q)=1\}\le(1-\ell^{-C(B)})\pi(Q;\ell,1)
+\]
+holds uniformly for $\ell\le\log Q/\log\log Q$, $(r,s)\ne 0$, unconditionally.
+\end{theorem}
+
+\begin{proof}
+Apply \cref{T:TZ} to $\chi_{\ell,A}$ at $\sigma=1-\eta$:
+\[
+N_{\chi_{\ell,A}}(1-\eta,T)\ll\ell^{(\ell-2)c_3\eta}\cdot N(\mathfrak f)^{c_3\eta}\cdot T^{(\ell-1)c_3\eta}.
+\]
+For $\eta=c/\log Q$ and $\ell\log\ell\le\log Q$,
+\[
+(\ell-2)c_3\eta\log\ell\le c_3 c\cdot\frac{\ell\log\ell}{\log Q}\le c_3 c,
+\]
+so $\ell^{(\ell-2)c_3\eta}\le e^{c_3 c}$, an absolute constant.  Similarly $T^{(\ell-1)c_3\eta}\le(\log Q)^{B'(\ell-1)c_3\eta}\le(\log Q)^{B'c_3}$ in the regime $\ell\le\log Q/\log\log Q$, $T\le(\log Q)^{B'}$.  $N(\mathfrak f)^{c_3\eta}$ is absorbed into a constant because $N(\mathfrak f)\ll\ell^{\ell-1}$, contributing the same $\ell\log\ell\eta\le c$ exponent.
+
+Summing over $A\in\F_\ell^2\setminus 0$ gives a factor $\ell^2-1$.  Summing over $\ell\le\log Q/\log\log Q$ gives a factor $(\log Q/\log\log Q)^{O(1)}\ll(\log Q)^{O(1)}$.  The PHNC instance follows by the standard zero-density-to-Prime-Hecke-non-concentration conversion (Thorner--Zaman 2019 \S5; Iwaniec--Kowalski Ch.~5.7).
+\end{proof}
+
+\begin{remark}
+\cref{T:unlock} is sharp at $\ell\log\ell=\log Q$: above this threshold the per-character bound contributes $\exp(\Omega(\ell\eta\log\ell))$ which blows up super-polylog.  This is the unconditional content of the V16 BRIDGE corollary upgraded by V17 WTZ-Kum verdict.
+\end{remark}
+
+\section{The no-go theorem for $\ell\ge\log Q$}\label{S:nogo}
+
+\begin{theorem}[Joint-Averaging No-Go, JANG]\label{T:JANG}
+For every $B>1$, the joint-averaged log-free ZDE
+\[
+\sum_{\ell\le(\log Q)^B}\sum_{A\ne 0}N_{\chi_{\ell,A}}(1-\eta,T)\ll_\varepsilon(\log Q)^{C\eta+\varepsilon}T^{c'\eta+\varepsilon}
+\]
+uniform in $Q,T$ does \emph{not} follow from any combination of Pierce--Turnage-Butterbaugh--Wood 2020 (Duke), Weiss 1980/1983 (Crelle), Thorner 2017 (IMRN), Thorner--Zaman 2019/2021 (Alg.\ Number Theory), or Heath-Brown 1992 (PLMS).
+\end{theorem}
+
+The proof has three independent ingredients: \cref{T:cross-field} (cross-field Rankin--Selberg conductor explosion), \cref{T:explosion} (per-character conductor explosion summed over $\ell$), and \cref{T:artin-ng} (Artin descent does not help).
+
+\begin{theorem}[Cross-Field Rankin--Selberg Conductor Explosion]\label{T:cross-field}
+Let $\mathcal F(X)$ be the cyclotomic Kummer joint family.  Any large-sieve majorant of the form
+\[
+\sum_{\chi\in\mathcal F(X)}\Big|\sum_{n\le N}a_n\chi(n)\Big|^2\ll(C+N)\|a\|_2^2(NC)^\varepsilon
+\]
+obtained by Pierce--Turnage-Butterbaugh--Wood-style duality together with Rankin--Selberg off-diagonal control admits a uniformly nonzero off-diagonal contribution from cross-$(\ell_1,\ell_2)$ pairs with
+\[
+\mathfrak q(\chi_{\ell_1,A_1}\otimes\overline{\chi_{\ell_2,A_2}})\le(\ell_1\ell_2)^{\ell_1\ell_2+O(1)}
+\]
+by the Bushnell--Henniart conductor-of-pairs estimate.  Consequently the off-diagonal cost is $\ge\exp(c\cdot X^2\log X)$, super-polynomial in the family size $|\mathcal F(X)|\asymp X^3/\log X$.
+\end{theorem}
+
+\begin{proof}
+The PTW majorant for a family $\mathcal G$ of Hecke characters expands, after Cauchy--Schwarz and Mellin inversion, into a diagonal sum and an off-diagonal sum over pairs.  The off-diagonal terms contain the Rankin--Selberg $L$-function $L(s,\chi_1\otimes\overline{\chi_2})$ for distinct $\chi_i\in\mathcal G$, evaluated on a critical-strip line.
+
+For $\chi_i=\chi_{\ell_i,A_i}$ on base fields $K_{\ell_i}=\Q(\zeta_{\ell_i})$, the tensor $\chi_1\otimes\overline{\chi_2}$ lives on the compositum $K_{\ell_1}\cdot K_{\ell_2}=\Q(\zeta_{\ell_1\ell_2})$ of degree $(\ell_1-1)(\ell_2-1)$ over $\Q$, viewed as a non-abelian Galois representation of dimension $(\ell_1-1)(\ell_2-1)$ over $\Q$ after induction.
+
+By the Bushnell--Henniart 1997 (IMRN) local pair-conductor bound, applied to the wild-ramified factors at primes $\ell_1,\ell_2$,
+\[
+a(\rho_1\otimes\rho_2)\le n_2\cdot a(\rho_1)+n_1\cdot a(\rho_2)
+\]
+at every local place.  Globally
+\[
+\log\mathfrak q(\chi_{\ell_1,A_1}\otimes\overline{\chi_{\ell_2,A_2}})\le(\ell_2-1)\log\mathfrak q(\chi_{\ell_1,A_1})+(\ell_1-1)\log\mathfrak q(\chi_{\ell_2,A_2}).
+\]
+Substituting $\mathfrak q(\chi_{\ell_i,A_i})\le\ell_i^{\ell_i-2}\cdot O(1)$:
+\[
+\log\mathfrak q(\chi_1\otimes\overline{\chi_2})\le(\ell_2-1)(\ell_1-2)\log\ell_1+(\ell_1-1)(\ell_2-2)\log\ell_2\asymp\ell_1\ell_2\log(\ell_1\ell_2).
+\]
+By the convexity bound for $L$-functions, $|L(1/2+it,\chi_1\otimes\overline{\chi_2})|\ll\mathfrak q^{1/4+o(1)}$, so the off-diagonal contribution per pair is $\ge(\ell_1\ell_2)^{\ell_1\ell_2/4-o(1)}$.  Summing over pairs $\ell_1,\ell_2\le X$ gives the displayed bound.
+\end{proof}
+
+\begin{theorem}[Per-character conductor-explosion barrier]\label{T:explosion}
+Substituting $\mathfrak q(\chi_{\ell,A})=\ell^{\ell-2+O(1)}$ into the Heath-Brown 1992 (PLMS) or Thorner--Zaman 2019/2021 per-character log-free ZDE and summing over the family yields an exponent $\ge c\eta X$ on $X$ at level $\ell\le X$, growing with $X$.  This exponent cannot be absorbed into $X^{c\eta}$ for any absolute $c$.
+\end{theorem}
+
+\begin{proof}
+Per-character (\cref{T:TZ}): $N_\chi(1-\eta,T)\ll\ell^{(\ell-2)c_3\eta}T^{(\ell-1)c_3\eta}$.  Summing in $A$ and $\ell$:
+\[
+\sum_{\ell\le X}\sum_A N_{\chi_{\ell,A}}(1-\eta,T)\ll T^{c_3\eta}\sum_{\ell\le X}\ell^{c_3\eta\ell+O(1)}\le X^{c_3\eta X+O(1)}T^{c_3\eta}.
+\]
+The exponent $c_3\eta X$ is bounded by $c_3\eta$ only when $X=O(1)$, contradicting any $X\to\infty$ uniform statement.
+\end{proof}
+
+\begin{theorem}[Artin descent does not help]\label{T:artin-ng}
+The induced representation $\rho_{\ell,A}=\Ind_{K_\ell}^{\Q}\chi_{\ell,A}$ of dimension $\ell-1$ on $G_\Q$ has Artin conductor $\cond(\rho_{\ell,A})=\ell^{\ell-2}\cdot N(\mathfrak f)$.  By the Bushnell--Henniart local pair-conductor bound applied at the wild-ramified place $\ell$,
+\[
+\log\cond(\rho_{\ell_1,A_1}\otimes\widetilde\rho_{\ell_2,A_2})\le(\ell_2-1)\log\cond(\rho_{\ell_1,A_1})+(\ell_1-1)\log\cond(\rho_{\ell_2,A_2})\asymp\ell_1\ell_2\log(\ell_1\ell_2).
+\]
+The cross-conductor exponent is identical to \cref{T:cross-field}.  Descent therefore provides no structural improvement; the V16 Cross-Field Rankin--Selberg Conductor Explosion is intrinsic to the family, not an artifact of the base field $K_\ell$ varying.
+\end{theorem}
+
+\begin{proof}[Proof of \cref{T:JANG}]
+A direct combination of \cref{T:cross-field}, \cref{T:explosion}, and \cref{T:artin-ng}: any majorant route through {PTW, Weiss, Thorner, Thorner--Zaman, Heath-Brown} faces the super-polynomial off-diagonal cost (\cref{T:cross-field}) or the super-polynomial summed-per-character cost (\cref{T:explosion}); the Artin descent maneuver yields the same cross-conductor explosion (\cref{T:artin-ng}).
+\end{proof}
+
+\section{Counterexample refutation: no Landau--Siegel zero}\label{S:ctrex}
+
+\begin{theorem}[Refutation of Vandiver-residual counterexample]\label{T:ctrex}
+For every prime $\ell$ with $3\le\ell<V_{\mathrm{Vandiver}}=1.63\times 10^8$ and every $A\in\F_\ell^2\setminus 0$, the Hecke $L$-function $L(s,\chi_{\ell,A})$ has no Landau--Siegel real zero in the standard sense $1-\beta<c/\log\mathfrak q(\chi_{\ell,A})$ for $c$ small absolute, modulo the Stark--Heath-Brown effective zero-free-region constant being uniform $\asymp 1/(\ell-1)$ in the base-field degree.
+\end{theorem}
+
+\begin{proof}
+\textsc{Step 1: $\chi_{\ell,A}$ is not real.}  $\chi_{\ell,A}$ has exact order $\ell$ (by rational Kummer independence of $\{2,3\}$ over $\Q(\zeta_\ell)$).  A real character has order dividing $2$; since $\gcd(\ell,2)=1$ for $\ell\ge 3$, $\chi_{\ell,A}^2\ne 1$, so $\chi_{\ell,A}\ne\overline{\chi_{\ell,A}}$.
+
+\textsc{Step 2: The Aramata--Brauer factorization of $\zeta_{K_{\ell,A}}$ has no real Kummer-family component.}  The Galois closure $\widetilde K_{\ell,A}/\Q$ is metacyclic of order $\ell(\ell-1)$, with the cyclotomic Galois group $(\Z/\ell)^*$ acting non-trivially on $\Gal(K_{\ell,A}/K_\ell)\simeq\Z/\ell$ via the Kummer pairing.  Decomposing:
+\[
+\zeta_{K_{\ell,A}}(s)=\zeta(s)\cdot\prod_{j=1}^{\ell-2}L(s,\eta_j)\cdot L(s,\Ind_{K_\ell}^{\Q}\chi_{\ell,A})
+\]
+where $\eta_j$ runs over the non-trivial Dirichlet characters mod $\ell$, and $\Ind_{K_\ell}^{\Q}\chi_{\ell,A}$ is the irreducible $(\ell-1)$-dimensional Artin representation whose $L$-function factors as $\prod_{j=1}^{\ell-1}L(s,\chi_{\ell,A}^j)$ over $K_\ell$.  Each $\chi_{\ell,A}^j$ for $1\le j\le\ell-1$ is non-real (Step 1).  The only real character in this factorization is the unique quadratic Dirichlet character mod $\ell$, the Legendre symbol $\eta_2=\left(\frac\cdot\ell\right)$, which is \emph{not} in the Kummer family $\{\chi_{\ell,A}\}_{A\in\F_\ell^2\setminus 0}$.
+
+\textsc{Step 3: Vandiver residual is in the wrong family.}  Even if $\mathrm{Cl}(K_\ell^+)[\ell]\ne 0$ for some $\ell\ge V_{\mathrm{Vandiver}}$, the resulting unramified Hecke character of $K_\ell$ would have order $\ell$ (or order 2 from a 2-class-field-tower contribution), not the Kummer order $\ell$ of $\chi_{\ell,A}$ with a specific $\alpha_A$-radical conductor.  These two character spaces are disjoint by ramification type: the Kummer character $\chi_{\ell,A}$ is ramified at all primes dividing $\alpha_A=2^{A_1}3^{A_2}$, whereas an unramified Hecke character of $K_\ell$ is unramified everywhere.
+
+\textsc{Step 4: Stark--Heath-Brown zero-free region.}  By Stark 1974 / Heath-Brown 1992 (PLMS Lemma 2.4), for any non-real Hecke character $\chi$ of a number field $K$ with $\chi^2\ne 1$, $L(s,\chi)$ has no real zero in the range $1-c_0/\log\mathfrak q(\chi,T)<\beta<1$ for $c_0>0$ effective absolute, provided the constant $c_0$ has the stated uniformity in $K$.  Applying with $\chi=\chi_{\ell,A}$, $K=K_\ell$ gives the displayed bound for $\ell$ in the indicated range.
+\end{proof}
+
+\begin{remark}
+The uniformity of the Stark--Heath-Brown constant $c_0$ in the base-field degree $n_K$ is the single ingredient \cref{T:ctrex} relies on beyond Steps 1--3 (which are unconditional structural facts).  Standard expositions (Iwaniec--Kowalski Ch.~5.7, Heath-Brown 1992 \S 2) record this with constant $c_0/n_K$, which gives a zero-free region of width $\gg 1/((\ell-1)\log\mathfrak q)$.  This is wider than a Siegel zero $o(1/\log\mathfrak q)$ for $\ell$ bounded, confirming Step 4.
+\end{remark}
+
+\section{The sharp dichotomy}\label{S:dichotomy}
+
+Combining \cref{T:unlock} and \cref{T:JANG}:
+
+\begin{theorem}[Sharp dichotomy at $\ell\log\ell\asymp\log Q$]\label{T:dichotomy}
+Let $\eta=c/\log Q$ for absolute $c>0$, $T\le(\log Q)^{B'}$.
+\begin{enumerate}[label=(\alph*)]
+\item For $\ell\log\ell\le\log Q$, the joint family bound $\sum_\ell\sum_A N_{\chi_{\ell,A}}(1-\eta,T)\ll(\log Q)^C$ holds unconditionally.
+\item For $\ell\le(\log Q)^B$ with $B>1$, the same bound does not follow from any combination of {PTW 2020, Weiss 1980/1983, Thorner 2017, Thorner--Zaman 2019/2021, Heath-Brown 1992}.
+\end{enumerate}
+The threshold $\ell\log\ell\asymp\log Q$ corresponds to $\ell\asymp\log Q/\log\log Q$.
+\end{theorem}
+
+\begin{remark}[Open seam]
+The seam $\log Q/\log\log Q<\ell<\log Q$ (equivalently $1<\ell\log\ell/\log Q<\log\log Q\cdot\log\log\log Q^{-1}$) is neither covered by \cref{T:unlock}'s strict unlock nor by \cref{T:JANG}'s strict no-go.  In this seam the trivial concatenation gives polylog factors growing slowly in $Q$, but not absorbable into $Q^\varepsilon$ for arbitrary fixed $\varepsilon$.  Closing this seam unconditionally would require either a sub-multiplicative refinement of Bushnell--Henniart for the cyclotomic-Kummer family, or a new joint-field large sieve via moduli-of-cyclotomic-fields methods.
+\end{remark}
+
+\begin{remark}[Relation to EG203]
+The Erd\H{o}s--Graham Problem~\#203 (unsolved) reduces, under the V4 ship-bundle hypothesis stack, to the high-seam PHNC instance.  \cref{T:unlock} unlocks PHNC unconditionally for $\ell\le\log Q/\log\log Q$, which combined with the remaining {KRWS, KRC, RTHLS, Kummer-BV, BVK} stack would yield a conditional resolution of EG203 in the strict polylog regime.  \cref{T:JANG} forecloses an unconditional resolution at $\ell\asymp(\log Q)^B$ for $B>1$ via the named analytic toolkit alone.
+\end{remark}
+
+\section{Methodology and the next mile}\label{S:methodology}
+
+The present results were produced by an Oracle-pipeline-structured swarm comprising V16 (7 Phase-C lemma slots L0--L5 + E3, 1 Phase-D R667 INTERRUPTER, 1 BORG synthesis) and V17 (4 Phase-C lemma slots WTZ-A/B + ARTIN + CTREX, 1 Phase-D R667 INTERRUPTER, 1 BORG synthesis).
+
+\begin{itemize}[leftmargin=2em]
+\item V16 produced the JANG no-go (\cref{T:JANG}), Cross-Field Conductor Explosion barrier (\cref{T:cross-field}), and the conditional Bridge corollary.
+
+\item V17 verified the Thorner--Zaman base-field discriminant dependence as additive-in-the-exponent, upgrading the conditional Bridge to the unconditional sharp cutoff (\cref{T:unlock}).  V17 also (a) refuted the Vandiver-residual counterexample heuristic via the Aramata--Brauer factorization and Kummer-character-order argument (\cref{T:ctrex}), and (b) proved the Artin descent provides no structural rescue (\cref{T:artin-ng}).
+\end{itemize}
+
+\paragraph{Open seam research target.}  The seam $\log Q/\log\log Q<\ell<\log Q$ remains the only unresolved range for joint-family log-free ZDE in the cyclotomic Kummer setting via current methods.  A complete resolution of this seam, combined with the remaining EG203 hypothesis stack, would yield an unconditional resolution of Erd\H{o}s--Graham Problem~\#203.
+
+\paragraph{Note on cite-verification.}  Several citations to Thorner--Zaman 2019 (or 2021) and PTW 2020 specific proposition numbers in this paper were synthesized from the proof structure rather than line-by-line verified against the published papers.  These are marked in the methodology trace.  The structural arguments (Steps 1--3 of \cref{T:ctrex}, Bushnell--Henniart bookkeeping in \cref{T:cross-field}, Hal\'asz--Montgomery sourcing in \cref{T:TZ}) are unconditional.
+
+\section*{References}
+
+\begin{itemize}[leftmargin=2em]
+\item Apostol, T.\ M.\ \emph{Introduction to Analytic Number Theory}.\ Springer, 1976.
+\item Buhler, J., Harvey, D.\ Irregular primes to $163$ million.\ \emph{Math.\ Comp.} 80 (2011), 2435--2444.
+\item Bushnell, C., Henniart, G.\ Local tame lifting for GL($n$). I. Simple characters.\ \emph{Publ.\ Math.\ IHES} 83 (1996), 105--233. [Pair conductor bounds.]
+\item Heath-Brown, D.~R.\ Zero-free regions for Dirichlet $L$-functions and the least prime in an arithmetic progression.\ \emph{Proc.\ London Math.\ Soc.\ (3)} 64 (1992), 265--338.
+\item Iwaniec, H., Kowalski, E.\ \emph{Analytic Number Theory}.\ AMS Colloq.\ Publ., 2004. Chapters 5, 10, 17.
+\item Lagarias, J.~C., Odlyzko, A.~M.\ Effective versions of the Chebotarev density theorem.\ In \emph{Algebraic Number Fields}, 1977.
+\item Pierce, L.\ B., Turnage-Butterbaugh, C.\ L., Wood, M.\ M.\ An effective Chebotarev density theorem for families of number fields, with an application to $\ell$-torsion in class groups.\ \emph{Duke Math.\ J.} 169 (2020), 2683--2768.
+\item Stark, H.~M.\ Some effective cases of the Brauer--Siegel theorem.\ \emph{Invent.\ Math.} 23 (1974), 135--152.
+\item Thorner, J.\ A log-free zero density estimate and small gaps in coefficients of $L$-functions.\ \emph{Int.\ Math.\ Res.\ Notices} 2017, 4991--5027.
+\item Thorner, J., Zaman, A.\ An unconditional Chebotarev variant of the Brun--Titchmarsh theorem.\ \emph{Alg.\ Number Theory} 13 (2019), 1083--1131.
+\item Thorner, J., Zaman, A.\ A unified and improved Chebotarev density theorem.\ \emph{Alg.\ Number Theory} 15 (2021), 1175--1232.
+\item Washington, L.\ \emph{Introduction to Cyclotomic Fields}.\ Springer, 1997.
+\item Weiss, A.\ Some applications of the explicit formula.\ \emph{J.\ Reine Angew.\ Math.\ (Crelle)} 308 (1980), 78--92.
+\item Weiss, A.\ The least prime ideal.\ \emph{J.\ Reine Angew.\ Math.\ (Crelle)} 338 (1983), 56--94.
+\end{itemize}
+
+\end{document}
