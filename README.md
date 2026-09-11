@@ -1,47 +1,58 @@
-# eg203-kummer-papers
+# Erdős–Graham #203 and Kummer obstruction papers
 
-**Nineteen LaTeX sources and eighteen compiled PDFs** from a research program on Erdős–Graham #203
-and the Kummer non-concentration obstructions underneath it.
+A collection of **nineteen LaTeX sources and eighteen compiled PDFs** from a research program on Erdős–Graham #203, with particular emphasis on Kummer-theoretic non-concentration and conductor/distribution obstructions.
 
 Author: Jared Wilder. First public timestamp: 2026-09-10.
 
-`papers/PAPERS-INDEX.md` is the author's own pre-release index and remains the authoritative
-paper-by-paper description.
+`papers/PAPERS-INDEX.md` contains the paper-by-paper index prepared before release.
 
-## Headline paper
+## Principal papers
 
-> **Paper 17, Sharp Dichotomy at ℓ log ℓ ≍ log Q.** Unconditional unlock + JANG no-go +
-> CTREX no-Siegel-zero + Artin-NG + Cross-Field Conductor Explosion.
+### Paper 17 — sharp dichotomy at `ℓ log ℓ ≍ log Q`
 
-Paper 16 carries five named theorems — Conductor Identity, Descent Emptiness, Iwasawa Decoupling,
-Family-Averaging Dilution, and the Spiegelungssatz Bridge — together with a Siegel-free zero-free
-region and a seven-wall synthesis.
+The headline paper isolates a transition at the scale `ℓ log ℓ ≍ log Q` and combines several previously separate ingredients: a conductor-growth mechanism, a no-Siegel-zero component, an Artin-style non-generation input, and cross-field conductor growth.
 
-## Scope of the paper program
+The historical source uses internal abbreviations such as `JANG`, `CTREX`, and `Artin-NG`; the paper itself defines those objects precisely. The mathematical statement should be read from the theorem section rather than from those abbreviations.
 
-The corpus mixes unconditional theorem papers, algebraic/structural papers, conditional analytic
-architecture, and one dedicated failed-routes audit. Each paper carries its own hypothesis-status
-table, so the evidence class is local to the paper rather than imposed by one blanket disclaimer.
+### Paper 16 — conductor/descent/Iwasawa structure
 
-**Paper 05** is the explicit negative-route paper: it records why BFI, Plünnecke–Ruzsa,
-fixed-field Chebotarev, order bounds, and generic Chebotarev-BT do not close the high-seam PHNC
-route as plug-ins. It is one component of the program, not the frame for the other eighteen
-sources.
+Paper 16 develops five named results:
 
-## Relationship to the other repositories
+- Conductor Identity;
+- Descent Emptiness;
+- Iwasawa Decoupling;
+- Family-Averaging Dilution;
+- Spiegelungssatz Bridge.
 
-- `jaredwilder/erdos203-obstruction-calculus` — the seven-round converged packet, carrying papers
-  1 through 5, the referee checklist, loose-end ledger, and a finite-example verifier that exits 0;
-- this repository — the **full** paper corpus, papers 1 through 17 plus the Gamma-fiber companion
-  note, including the twelve sources not present in the converged packet.
+It also contains a Siegel-free zero-free-region argument and a synthesis of the remaining analytic obstructions.
 
-## Submission priority, from the author's index
+## Structure of the paper series
 
-1. Paper 1 to JNT or Acta Arith
-2. Paper 5 to Bulletin AMS or Expositiones
-3. Papers 6 and 2, the rank-r pair, to JNT or Acta Arith
-4. Paper 17, Sharp Dichotomy, to Math. Comp., JNT, Acta Arith or Compositio
-5. The Gamma-fiber companion note as a JNT note
+The corpus contains several different kinds of mathematics:
+
+- unconditional theorem papers;
+- algebraic and structural papers;
+- conditional analytic criteria isolating the remaining distribution input;
+- one paper devoted to approaches that fail at the required strength.
+
+Each paper states its own hypotheses and dependencies, so unconditional and conditional results are not merged into one status.
+
+**Paper 05** is the negative-route analysis. It explains why BFI, Plünnecke–Ruzsa, fixed-field Chebotarev, order bounds, and generic Chebotarev–Brun–Titchmarsh estimates do not by themselves deliver the distribution theorem needed by that route.
+
+## Relationship to `erdos203-obstruction-calculus`
+
+- `jaredwilder/erdos203-obstruction-calculus` collects the subgroup-obstruction calculus, the first five papers, supporting verification, and the dependency structure around the conditional final step;
+- this repository contains the **full paper series**, papers 1 through 17 plus the Gamma-fiber companion note, including twelve sources not present in the smaller obstruction-calculus repository.
+
+## Suggested submission order from the author's notes
+
+1. Paper 1 — subgroup obstruction calculus — JNT or *Acta Arithmetica*.
+2. Paper 5 — failed-route / obstruction analysis — *Bulletin of the AMS* or *Expositiones Mathematicae*.
+3. Papers 6 and 2 — the rank-`r` pair — JNT or *Acta Arithmetica*.
+4. Paper 17 — sharp dichotomy — *Mathematics of Computation*, JNT, *Acta Arithmetica*, or *Compositio*.
+5. Gamma-fiber companion note — JNT note.
+
+These are submission suggestions from the research notes, not publication or peer-review status.
 
 ## License
 
