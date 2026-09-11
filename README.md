@@ -39,6 +39,18 @@ Each paper states its own hypotheses and dependencies, so unconditional and cond
 
 **Paper 05** is the negative-route analysis. It explains why BFI, Plünnecke–Ruzsa, fixed-field Chebotarev, order bounds, and generic Chebotarev–Brun–Titchmarsh estimates do not by themselves deliver the distribution theorem needed by that route.
 
+## Technical companion notes and program roadmap
+
+Three substantial TeX sources recovered from a generic archive `notes/` directory belong mathematically to this paper program:
+
+- **program overview / dependency map** for the multi-manuscript EG203 program;
+- **Exact Gamma-Fiber Local Density and the Kummer-Character Remainder**, whose central identity is `|B_q(c)| = gcd(a_q,b_q) * 1_{Gamma_q}(c)`;
+- **A Jet-Primitive Stepanov Auxiliary Theorem for the (2,3)-Orbit**, a transferable auxiliary-polynomial construction that is locally superseded by the exact Gamma-fiber identity.
+
+See [`docs/TECHNICAL-COMPANION-NOTES.md`](docs/TECHNICAL-COMPANION-NOTES.md) for the human index and the exact archive source locations.
+
+The exact Gamma-fiber note is especially useful for reading the rest of the estate: a reachable target occupies density `1/|Gamma_q|` in one exponent period. That identity should be used when checking any independent sieve draft that assumes a different local-density scale.
+
 ## Recovered analytic subseries
 
 Five additional LaTeX sources were recovered during the September 11 estate sweep from an old directory named `zenodo-deposits`; nothing had actually been deposited there. Some were cited elsewhere in the paper estate, making their previous invisibility a real publication/discoverability defect.
@@ -51,7 +63,7 @@ See [`docs/RECOVERED-ANALYTIC-ROUTE.md`](docs/RECOVERED-ANALYTIC-ROUTE.md) for t
 
 - `jaredwilder/erdos203` is the finite prime-fibre obstruction program, with exact computations, replay code and finite covering impossibility results;
 - `jaredwilder/erdos203-obstruction-calculus` collects the subgroup-obstruction calculus, the first five papers, supporting verification, and the dependency structure around the conditional final step;
-- this repository is the **full paper-series home**, papers 1 through 17 plus the Gamma-fiber companion material and the recovered analytic subseries index.
+- this repository is the **full paper-series home**, papers 1 through 17 plus the Gamma-fiber companion material, the program roadmap, and the recovered analytic subseries indexes.
 
 This division is by mathematical role, not by which session or tool produced the artifact.
 
