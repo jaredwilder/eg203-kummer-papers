@@ -39,10 +39,21 @@ Each paper states its own hypotheses and dependencies, so unconditional and cond
 
 **Paper 05** is the negative-route analysis. It explains why BFI, Plünnecke–Ruzsa, fixed-field Chebotarev, order bounds, and generic Chebotarev–Brun–Titchmarsh estimates do not by themselves deliver the distribution theorem needed by that route.
 
-## Relationship to `erdos203-obstruction-calculus`
+## Recovered analytic subseries
 
+Five additional LaTeX sources were recovered during the September 11 estate sweep from an old directory named `zenodo-deposits`; nothing had actually been deposited there. Some were cited elsewhere in the paper estate, making their previous invisibility a real publication/discoverability defect.
+
+They include two explicitly labelled skeletons, the 671-line Gamma-fiber local-density development, and two targeted attempts at named analytic gaps. Their states are preserved rather than being silently promoted to finished papers.
+
+See [`docs/RECOVERED-ANALYTIC-ROUTE.md`](docs/RECOVERED-ANALYTIC-ROUTE.md) for the five-file index and the exact relationship to the other #203 repositories.
+
+## Relationship to the other #203 repositories
+
+- `jaredwilder/erdos203` is the finite prime-fibre obstruction program, with exact computations, replay code and finite covering impossibility results;
 - `jaredwilder/erdos203-obstruction-calculus` collects the subgroup-obstruction calculus, the first five papers, supporting verification, and the dependency structure around the conditional final step;
-- this repository contains the **full paper series**, papers 1 through 17 plus the Gamma-fiber companion note, including twelve sources not present in the smaller obstruction-calculus repository.
+- this repository is the **full paper-series home**, papers 1 through 17 plus the Gamma-fiber companion material and the recovered analytic subseries index.
+
+This division is by mathematical role, not by which session or tool produced the artifact.
 
 ## Suggested submission order from the author's notes
 
