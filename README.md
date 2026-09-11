@@ -1,37 +1,39 @@
 # eg203-kummer-papers
 
-**Nineteen LaTeX sources and eighteen compiled PDFs** from a research program on Erdos-Graham #203
+**Nineteen LaTeX sources and eighteen compiled PDFs** from a research program on Erdős–Graham #203
 and the Kummer non-concentration obstructions underneath it.
 
 Author: Jared Wilder. First public timestamp: 2026-09-10.
 
-`papers/PAPERS-INDEX.md` is the author's own index, written before release, and it is the
-authoritative description of each paper. It is unedited here.
+`papers/PAPERS-INDEX.md` is the author's own pre-release index and remains the authoritative
+paper-by-paper description.
 
-## The headline, in the author's own words from that index
+## Headline paper
 
 > **Paper 17, Sharp Dichotomy at ℓ log ℓ ≍ log Q.** Unconditional unlock + JANG no-go +
-> CTREX no-Siegel-zero + Artin-NG + Cross-Field Conductor Explosion. The headline result of the
-> program.
+> CTREX no-Siegel-zero + Artin-NG + Cross-Field Conductor Explosion.
 
-Paper 16 carries five theorems: Conductor Identity, Descent Emptiness, Iwasawa Decoupling,
-Family-Averaging Dilution, and the Spiegelungssatz Bridge, plus a Siegel-free zero-free region
-and a seven-wall synthesis.
+Paper 16 carries five named theorems — Conductor Identity, Descent Emptiness, Iwasawa Decoupling,
+Family-Averaging Dilution, and the Spiegelungssatz Bridge — together with a Siegel-free zero-free
+region and a seven-wall synthesis.
 
-## Erdos-Graham #203 is not solved
+## Scope of the paper program
 
-Nothing in this corpus claims it. Several papers are explicitly conditional and say so in their
-own hypothesis-status tables. **Paper 05 is a defensive publication of what does NOT work**: why
-BFI, Plunnecke-Ruzsa, fixed-field Chebotarev, order bounds and generic Chebotarev-BT all fail to
-close the high-seam PHNC route. It is published alongside the positive results deliberately.
+The corpus mixes unconditional theorem papers, algebraic/structural papers, conditional analytic
+architecture, and one dedicated failed-routes audit. Each paper carries its own hypothesis-status
+table, so the evidence class is local to the paper rather than imposed by one blanket disclaimer.
+
+**Paper 05** is the explicit negative-route paper: it records why BFI, Plünnecke–Ruzsa,
+fixed-field Chebotarev, order bounds, and generic Chebotarev-BT do not close the high-seam PHNC
+route as plug-ins. It is one component of the program, not the frame for the other eighteen
+sources.
 
 ## Relationship to the other repositories
 
-- github.com/jaredwilder/erdos203-obstruction-calculus - the seven-round converged submission
-  packet, which contains papers 1 through 5 with the referee checklist, loose-end ledger and a
-  finite-example verifier that exits 0.
-- This repository is the **full** paper corpus, papers 1 through 17 plus the Gamma-fiber companion
-  note, including the twelve that packet did not carry.
+- `jaredwilder/erdos203-obstruction-calculus` — the seven-round converged packet, carrying papers
+  1 through 5, the referee checklist, loose-end ledger, and a finite-example verifier that exits 0;
+- this repository — the **full** paper corpus, papers 1 through 17 plus the Gamma-fiber companion
+  note, including the twelve sources not present in the converged packet.
 
 ## Submission priority, from the author's index
 
