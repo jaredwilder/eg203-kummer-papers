@@ -1,82 +1,99 @@
-# Erdős–Graham #203 and Kummer obstruction papers
+# Erdős–Graham #203 — Kummer obstruction paper series
 
-A collection of **nineteen LaTeX sources and eighteen compiled PDFs** from a research program on Erdős–Graham #203, with particular emphasis on Kummer-theoretic non-concentration and conductor/distribution obstructions.
+A collection of **nineteen LaTeX manuscripts and eighteen compiled PDFs** on subgroup obstructions, Kummer-character structure, conductor growth, synchronization defects, and the analytic distribution problem arising in Erdős–Graham #203.
 
-Author: Jared Wilder. First public timestamp: 2026-09-10.
+The paper-by-paper index is [`papers/PAPERS-INDEX.md`](papers/PAPERS-INDEX.md).
 
-`papers/PAPERS-INDEX.md` contains the paper-by-paper index prepared before release.
+## Mathematical spine
 
-## Principal papers
+The series develops the problem in four layers.
 
-### Paper 17 — sharp dichotomy at `ℓ log ℓ ≍ log Q`
+### Finite subgroup calculus
 
-The headline paper isolates a transition at the scale `ℓ log ℓ ≍ log Q` and combines several previously separate ingredients: a conductor-growth mechanism, a no-Siegel-zero component, an Artin-style non-generation input, and cross-field conductor growth.
+The early papers establish exact finite-group identities for obstruction sets, including character expansions, moment formulas, CRT synchronization, and local density calculations.
 
-The historical source uses internal abbreviations such as `JANG`, `CTREX`, and `Artin-NG`; the paper itself defines those objects precisely. The mathematical statement should be read from the theorem section rather than from those abbreviations.
+The subgroup-calculus core is also extracted in [`erdos203-obstruction-calculus`](https://github.com/jaredwilder/erdos203-obstruction-calculus).
 
-### Paper 16 — conductor/descent/Iwasawa structure
+### Kummer and conductor structure
 
-Paper 16 develops five named results:
+The middle papers develop:
 
-- Conductor Identity;
-- Descent Emptiness;
-- Iwasawa Decoupling;
-- Family-Averaging Dilution;
-- Spiegelungssatz Bridge.
+- conductor identities;
+- descent criteria;
+- Kummer-character independence;
+- synchronization and lifting defects;
+- cross-field conductor growth;
+- family-averaging and Iwasawa-style decoupling.
 
-It also contains a Siegel-free zero-free-region argument and a synthesis of the remaining analytic obstructions.
+These convert the original obstruction problem into a distribution question about structured Kummer data.
 
-## Structure of the paper series
+### Exact local density
 
-The corpus contains several different kinds of mathematics:
+A companion note proves the Gamma-fibre identity
 
-- unconditional theorem papers;
-- algebraic and structural papers;
-- conditional analytic criteria isolating the remaining distribution input;
-- one paper devoted to approaches that fail at the required strength.
+\[
+|B_q(c)|=\gcd(a_q,b_q)\,\mathbf 1_{\Gamma_q}(c).
+\]
 
-Each paper states its own hypotheses and dependencies, so unconditional and conditional results are not merged into one status.
+Thus a reachable target occupies density
 
-**Paper 05** is the negative-route analysis. It explains why BFI, Plünnecke–Ruzsa, fixed-field Chebotarev, order bounds, and generic Chebotarev–Brun–Titchmarsh estimates do not by themselves deliver the distribution theorem needed by that route.
+\[
+1/|\Gamma_q|
+\]
 
-## Technical companion notes and program roadmap
+in one exponent period. This exact local density is the correct starting point for any sieve argument built on the same fibres.
 
-Three substantial TeX sources recovered from a generic archive `notes/` directory belong mathematically to this paper program:
+See [`docs/TECHNICAL-COMPANION-NOTES.md`](docs/TECHNICAL-COMPANION-NOTES.md).
 
-- **program overview / dependency map** for the multi-manuscript EG203 program;
-- **Exact Gamma-Fiber Local Density and the Kummer-Character Remainder**, whose central identity is `|B_q(c)| = gcd(a_q,b_q) * 1_{Gamma_q}(c)`;
-- **A Jet-Primitive Stepanov Auxiliary Theorem for the (2,3)-Orbit**, a transferable auxiliary-polynomial construction that is locally superseded by the exact Gamma-fiber identity.
+### Analytic distribution criterion
 
-See [`docs/TECHNICAL-COMPANION-NOTES.md`](docs/TECHNICAL-COMPANION-NOTES.md) for the human index and the exact archive source locations.
+The final route isolates a sharp transition near
 
-The exact Gamma-fiber note is especially useful for reading the rest of the estate: a reachable target occupies density `1/|Gamma_q|` in one exponent period. That identity should be used when checking any independent sieve draft that assumes a different local-density scale.
+\[
+\ell\log\ell\asymp\log Q
+\]
 
-## Recovered analytic subseries
+and formulates the remaining non-concentration/distribution input needed to complete that approach.
 
-Five additional LaTeX sources were recovered during the September 11 estate sweep from an old directory named `zenodo-deposits`; nothing had actually been deposited there. Some were cited elsewhere in the paper estate, making their previous invisibility a real publication/discoverability defect.
+The series distinguishes unconditional algebraic results from conditional analytic implications. Paper 5 is devoted specifically to why several standard tools—fixed-field Chebotarev, generic Brun–Titchmarsh/Chebotarev bounds, order estimates, and additive-combinatorial routes—do not by themselves supply the required distribution strength.
 
-They include two explicitly labelled skeletons, the 671-line Gamma-fiber local-density development, and two targeted attempts at named analytic gaps. Their states are preserved rather than being silently promoted to finished papers.
+## Selected papers
 
-See [`docs/RECOVERED-ANALYTIC-ROUTE.md`](docs/RECOVERED-ANALYTIC-ROUTE.md) for the five-file index and the exact relationship to the other #203 repositories.
+### Paper 1 — subgroup obstruction calculus
 
-## Relationship to the other #203 repositories
+Finite abelian-group obstruction identities, exact local structure, and the base algebra used throughout the series.
 
-- `jaredwilder/erdos203` is the finite prime-fibre obstruction program, with exact computations, replay code and finite covering impossibility results;
-- `jaredwilder/erdos203-obstruction-calculus` collects the subgroup-obstruction calculus, the first five papers, supporting verification, and the dependency structure around the conditional final step;
-- this repository is the **full paper-series home**, papers 1 through 17 plus the Gamma-fiber companion material, the program roadmap, and the recovered analytic subseries indexes.
+### Paper 5 — analytic route barriers
 
-This division is by mathematical role, not by which session or tool produced the artifact.
+A systematic comparison of candidate analytic tools against the quantitative distribution statement the #203 route actually requires.
 
-## Suggested submission order from the author's notes
+### Paper 16 — conductor and descent structure
 
-1. Paper 1 — subgroup obstruction calculus — JNT or *Acta Arithmetica*.
-2. Paper 5 — failed-route / obstruction analysis — *Bulletin of the AMS* or *Expositiones Mathematicae*.
-3. Papers 6 and 2 — the rank-`r` pair — JNT or *Acta Arithmetica*.
-4. Paper 17 — sharp dichotomy — *Mathematics of Computation*, JNT, *Acta Arithmetica*, or *Compositio*.
-5. Gamma-fiber companion note — JNT note.
+Develops the conductor identity, descent emptiness, Iwasawa decoupling, family-averaging dilution, and a Spiegelungssatz bridge.
 
-These are submission suggestions from the research notes, not publication or peer-review status.
+### Paper 17 — sharp dichotomy
 
-## License
+Combines the conductor-growth and non-generation machinery into the `ℓ log ℓ ~ log Q` transition analysis.
 
-Apache-2.0.
+## Recovered companion manuscripts
+
+Additional TeX sources include:
+
+- the program dependency map;
+- **Exact Gamma-Fiber Local Density and the Kummer-Character Remainder**;
+- **A Jet-Primitive Stepanov Auxiliary Theorem for the (2,3)-Orbit**;
+- five analytic-route manuscripts recovered from an older source bundle.
+
+Their locations and relationships are indexed in [`docs/TECHNICAL-COMPANION-NOTES.md`](docs/TECHNICAL-COMPANION-NOTES.md) and [`docs/RECOVERED-ANALYTIC-ROUTE.md`](docs/RECOVERED-ANALYTIC-ROUTE.md).
+
+## Related repositories
+
+- [`erdos203`](https://github.com/jaredwilder/erdos203) — finite prime-fibre obstruction and exact covering calculations;
+- [`erdos203-obstruction-calculus`](https://github.com/jaredwilder/erdos203-obstruction-calculus) — finite subgroup/Kummer theorem package and verification;
+- this repository — the complete manuscript series and companion notes.
+
+## Publication status
+
+These are research manuscripts and supporting notes; repository inclusion does not imply journal publication or peer review. Each paper states its own hypotheses and dependencies.
+
+Author: Jared Wilder. License: Apache-2.0.
