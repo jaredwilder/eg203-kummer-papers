@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use these manuscripts, please cite this repository."
+title: "Erdos-Graham #203 Kummer obstruction manuscripts"
+authors:
+  - family-names: "Wilder"
+    given-names: "Jared"
+type: dataset
+repository-code: "https://github.com/jaredwilder/eg203-kummer-papers"
